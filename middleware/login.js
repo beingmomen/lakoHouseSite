@@ -1,3 +1,4 @@
-export default async function ({ redirect, $auth }) {
-  if ($auth.$state.loggedIn) redirect("/panel");
+export default async function ({ redirect, $auth, i18n }) {
+  console.warn("context", i18n);
+  if ($auth.$state.loggedIn) redirect("/");
 }
