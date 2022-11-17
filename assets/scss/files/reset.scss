@@ -1,0 +1,295 @@
+@import "@core/scss/vue/libs/vue-select.scss";
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.auth-wrapper {
+  .brand-logo {
+    // width: 185px;
+    width: 255px;
+    img {
+      width: 60px;
+    }
+  }
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  color: #7367f0;
+  background-color: rgba(115, 103, 240, 0.12);
+}
+
+.text-end {
+  text-align: end !important;
+}
+.text-start {
+  text-align: start !important;
+}
+.h-35 {
+  height: 35px;
+}
+
+.w-13 {
+  width: 50px;
+  .input-group-text {
+    width: 100%;
+  }
+}
+
+.w-87 {
+  width: calc(100% - 50px);
+}
+
+.custom-form {
+  .form-group {
+    height: 60px;
+    > label,
+    .col-form-label {
+      height: 25px;
+      padding: 0;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+.v-select-custom {
+  .vs__dropdown-toggle {
+    height: 100%;
+    border-inline-start: 0;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+}
+.custom-form {
+  .custom-file-label,
+  .form-control {
+    border-inline-start: 0;
+  }
+}
+
+.vs__dropdown-option--highlight {
+  color: #fff !important;
+}
+
+// Important
+.english-dir {
+  .form-input-icon-ltr {
+    .form-control {
+      border-top-right-radius: 4px !important;
+      border-bottom-right-radius: 4px !important;
+    }
+  }
+}
+
+.plus-row-ltr {
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.plus-row-rtl {
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.edit-time-line-rtl {
+  left: 25px;
+  top: 10px;
+  z-index: 1000;
+}
+.edit-time-line-ltr {
+  right: 25px;
+  top: 10px;
+  z-index: 1000;
+}
+// Important
+
+.dark-layout {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    // border: 1px solid #b4b7bd;
+    -webkit-text-fill-color: #b4b7bd;
+    -webkit-box-shadow: 0 0 0px 1000px #283046 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+.light-layout {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    // border: 1px solid #d8d6de;
+    -webkit-text-fill-color: #6e6b7b;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+input:-internal-autofill-selected {
+  background-image: #f00 !important;
+}
+
+.navbar-nav {
+  .right-menu-icon-h {
+    &::after {
+      right: auto !important;
+      left: 1rem !important;
+      background-image: url("/img/chevron-left.svg") !important;
+    }
+  }
+
+  .dropdown-submenu {
+    .dropdown-menu:dir(rtl) {
+      right: 100% !important;
+      left: 0 !important;
+    }
+  }
+
+  .dropdown-language {
+    .dropdown-toggle {
+      &::after {
+        display: none;
+      }
+    }
+    .dropdown-menu {
+      &:dir(rtl) {
+        top: 45px !important;
+        right: 7px !important;
+      }
+      &:dir(ltr) {
+        top: 45px !important;
+        left: 7px !important;
+      }
+    }
+  }
+
+  .dropdown-user {
+    .nav-link {
+      &::after {
+        display: none;
+      }
+    }
+    ul.dropdown-menu {
+      &:dir(rtl) {
+        top: 45px !important;
+        left: -14px !important;
+        right: unset !important;
+      }
+      &:dir(ltr) {
+        top: 45px !important;
+        right: -14px !important;
+        left: unset !important;
+      }
+    }
+  }
+}
+
+.slick-dots {
+  li {
+    button {
+      &::before {
+        opacity: 1 !important;
+        font-size: 8px !important;
+      }
+    }
+  }
+  .slick-active {
+    button {
+      &::before {
+        color: #811431 !important;
+      }
+    }
+  }
+}
+
+.msg-online-style {
+  label {
+    &:dir(rtl) {
+      text-align: right;
+    }
+  }
+}
+
+// .add-arrow-icon {
+//   &::after {
+//     background-image: url("/img/chevron-left.svg");
+//   }
+//   &::before {
+//     text-align:center
+//   }
+// }
+
+.show-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  &::before {
+    &:dir(ltr) {
+      left: 0;
+    }
+    &:dir(rtl) {
+      right: 0;
+      left: unset;
+    }
+  }
+  &::after {
+    &:dir(ltr) {
+      left: 0;
+    }
+    &:dir(rtl) {
+      right: 0;
+      left: unset;
+    }
+  }
+}
+
+.product-colors {
+  .colors-radio-group {
+    .custom-radio {
+      padding: 0 !important;
+      .custom-control-input {
+        display: none;
+        // &:dir(ltr) {
+        //   left: 0;
+        // }
+        // &:dir(rtl) {
+        //   right: 0;
+        //   left: unset;
+        // }
+      }
+      .custom-control-label {
+        p {
+          cursor: pointer;
+        }
+        &::after,
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.all-height-filter {
+  .sidebar {
+    .sidebar-shop {
+      .card {
+        height: 100%;
+      }
+    }
+  }
+}

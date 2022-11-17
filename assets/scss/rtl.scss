@@ -1,0 +1,241 @@
+.arabic-dir {
+
+  direction: rtl;
+  body {
+    direction: rtl;
+    .vertical-layout {
+      direction: rtl;
+      .navbar {
+        right: unset;
+        left: 0;
+        .navbar-container {
+          .navbar-nav {
+            margin-right: auto !important;
+            margin-left: unset !important;
+            padding: 0;
+            .nav-item {
+              .dropdown-user {
+                .dropdown-user-link {
+                  .user-nav {
+                    margin-left: 0.8rem;
+                    margin-right: unset;
+                    .user-name {
+                      margin-left: unset;
+                    }
+                  }
+                }
+                .dropdown-menu {
+                  .custom-class {
+                    margin-left: 0.5rem;
+                    margin-right: unset;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .main-menu {
+
+        .main-menu-content {
+          .navigation {
+            .nav-item {
+              .svg-inline--fa {
+                margin-left: 1.1rem;
+                margin-right: unset;
+              }
+            }
+            .navigation-header {
+              text-align: right;
+              margin-right: 2.2rem;
+              margin-left: unset;
+            }
+            .nav-item.has-sub {
+              a {
+                &::after {
+                  left: 20px !important;
+                  right: unset !important;
+                  background-image: url(/img/chevron-left.svg) !important;
+                }
+              }
+              .menu-content {
+                .nav-item {
+                  .custom-class {
+                    margin-left: 1.45rem;
+                    margin-right: unset;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .app-content {
+        // Hide this
+        margin-right: 260px;
+        margin-left: unset;
+        text-align: right;
+        & {
+          @media (max-width: 1200px) {
+            margin-right: 0;
+          }
+        }
+      }
+
+      // Important
+      .breadcrumbs-top {
+        .breadcrumb:not([class*=breadcrumb-]) .breadcrumb-item + .breadcrumb-item:before {
+          background-image: url(/img/chevron-left.svg) !important;
+          float: right;
+          margin-right: 0;
+          margin-left: 0.6rem;
+        }
+      }
+      // Important
+
+      .card-body {
+        .congratulation-medal {
+          right: unset !important;
+          left: 37px !important;
+        }
+        .custome-search-input {
+          .filter-input {
+            border-top-right-radius: 0.357rem !important;
+            border-bottom-right-radius: 0.357rem !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+          }
+          .input-group-append {
+            button {
+              border-top-left-radius: 0.357rem !important;
+              border-bottom-left-radius: 0.357rem !important;
+              border-top-right-radius: 0 !important;
+              border-bottom-right-radius: 0 !important;
+            }
+          }
+        }
+      }
+
+      .footer {
+        margin-right: 260px;
+        margin-left: unset !important;
+        text-align: right !important;
+        .clearfix {
+          display: flex;
+          justify-content: space-between;
+          &::after {
+            content: unset !important;
+          }
+        }
+      }
+    }
+
+    .menu-collapsed {
+      .app-content {
+        margin-right: 80px;
+        margin-left: unset !important;
+      }
+      .footer {
+        margin-right: 80px;
+        margin-left: unset !important;
+      }
+    }
+
+    .auth-wrapper {
+      .brand-logo {
+        left: unset;
+        right: 2rem;
+        // width: 185px;
+        width: 255px;
+        img {
+          width: 60px;
+        }
+      }
+      .auth-bg {
+        text-align: right;
+        .feather-help-circle {
+          right: unset !important;
+          left: 10px !important;
+        }
+      }
+      #login-password {
+        padding-right: 1rem !important;
+        padding-left: 0 !important;
+        border-right: unset;
+        border-right: 1px solid #d8d6de;
+        border-left: unset;
+        border-top-right-radius: 0.357rem !important;
+        border-bottom-right-radius: 0.357rem !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+      }
+      .input-group-append {
+        .input-group-text {
+          border-left: 1px solid #d8d6de;
+          border-right: unset;
+          border-top-left-radius: 0.357rem !important;
+          border-bottom-left-radius: 0.357rem !important;
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+      }
+    }
+
+    .pagination {
+      .page-item {
+        .page-link {
+          border-radius: 5rem !important;
+        }
+      }
+    }
+
+    .modal-content {
+      .modal-header {
+        .close {
+          margin-left: -1.4rem !important;
+          margin-right: auto !important;
+          transform: translate(-8px, -2px);
+        }
+      }
+      .modal-body {
+        text-align: right !important;
+      }
+    }
+
+
+
+      .app-timeline {
+        margin-right: 1rem;
+        .timeline-item {
+          padding-right: 2.5rem;
+          padding-left: 0;
+          border-right: 1px solid #ebe9f1;
+          border-left: none;
+          .timeline-item-point {
+            right: -6px;
+            &::before {
+              left: 0;
+              right: -4px;
+            }
+          }
+          .media-aside {
+            margin-right: 0;
+          }
+        }
+      }
+
+      .dark-layout {
+        .app-timeline {
+          .timeline-item {
+            border-right-color: #3b4253;
+          }
+        }
+      }
+
+
+    // Important
+
+
+  }
+}

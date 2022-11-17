@@ -1,0 +1,17 @@
+.Vue-Toastification__toast.Vue-Toastification__toast--default.top-right,
+.Vue-Toastification__toast.Vue-Toastification__toast--default.top-left {
+  background-color: #fff;
+  .Vue-Toastification__toast-body {
+    color: #7367f0;
+    margin-top: 5px;
+  }
+  svg {
+    color: #7367f0;
+  }
+  button {
+    color: #7367f0;
+  }
+}
+.Vue-Toastification__container.top-left {
+  direction: ltr;
+}
