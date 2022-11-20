@@ -20,25 +20,20 @@ export default {
       // { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "icon", type: "image/x-icon", href: "/img/favicon.ico" },
       { rel: "stylesheet", type: "image/x-icon", href: "/img/favicon.ico" },
-      {
-        rel: "stylesheet",
-        integrity:
-          "sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N",
-        crossorigin: "anonymous",
-        href: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://unpkg.com/light-icons/dist/light-icon.css",
-      },
+      // {
+      //   rel: "stylesheet",
+      //   integrity:
+      //     "sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N",
+      //   crossorigin: "anonymous",
+      //   href: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css",
+      // },
+      // {
+      //   rel: "stylesheet",
+      //   href: "https://unpkg.com/light-icons/dist/light-icon.css",
+      // },
     ],
 
-    script: [
-      {
-        body: true,
-        src: "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js",
-      },
-    ],
+    script: [],
   },
 
   pageTransition: {
@@ -52,7 +47,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~/assets/css/bootstrap.css",
-    "~/assets/css/bootstrap.rtl.css",
+    "~/assets/css/bootstrap.rtl.min.css",
     "~/@core/scss/core.scss",
     "@fortawesome/fontawesome-svg-core/styles.css",
     "~/assets/scss/rtl.scss",
@@ -62,6 +57,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/auth.js", mode: "client" },
+    { src: "~/plugins/settings/lottie-player.js", mode: "client" },
     "~/plugins/settings/fontawesome.js",
     "~/plugins/settings/light-vue.js",
     "~/plugins/settings/vee-validate.js",
@@ -168,7 +164,8 @@ export default {
 
   pwa: {
     icon: {
-      fileName: "/img/lako.svg",
+      fileName: "lako.svg",
+      source: "/img/lako.svg",
     },
     manifest: {
       name: "Lako House",
