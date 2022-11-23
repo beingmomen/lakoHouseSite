@@ -3,9 +3,9 @@ export default {
   head: {
     title: "Lako House",
     htmlAttrs: {
-      lang: "en",
-      dir: "ltr",
-      class: "english-dir",
+      lang: "ar",
+      dir: "rtl",
+      class: "arabic-dir",
     },
     bodyAttrs: {
       class: "light-layout",
@@ -108,10 +108,10 @@ export default {
     langDir: "locales/",
     // strategy: 'no_prefix',   use it when tou won’t prefix in route
     locales: [
-      { code: "ar", iso: "ar-EG", file: "ar", dir: "rtl" },
       { code: "en", iso: "en-US", file: "en", dir: "ltr" },
+      { code: "ar", iso: "ar-EG", file: "ar", dir: "rtl" },
     ],
-    defaultLocale: "en",
+    defaultLocale: "ar",
     detectBrowserLanguage: {
       cookieKey: "i18n_redirected_lako_house_site",
     },
