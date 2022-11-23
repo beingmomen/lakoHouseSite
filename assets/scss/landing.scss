@@ -35,7 +35,8 @@ $main_color: #811431;
 .landing-section {
   margin-bottom: 100px;
   overflow: hidden;
-  .section-head {
+  .section-head { 
+    font-size: 28px;
     position: relative;
     text-align: start;
     @media (max-width: 575.98px) {
@@ -214,7 +215,14 @@ $main_color: #811431;
 
 .message-online {
   label {
-    font-size: 16px;
+    font-size: 20px; 
+  }
+
+  .form-control {
+    font-size: 19px;
+    &::placeholder {
+      font-size: 18px;
+    }
   }
 
   button {

@@ -18,10 +18,10 @@
       </b-col>
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
-          <b-card-title title-tag="h2" class="font-weight-bold mb-1">
+          <b-card-title title-tag="h2" class="font-weight-bold fs-2 mb-1">
             {{ welcome }}
           </b-card-title>
-          <b-card-text class="mb-2">
+          <b-card-text class="mb-2 fs-3">
             {{ please }}
           </b-card-text>
           <b-form class="mt-2" @submit.prevent="addDataToDB">
@@ -29,14 +29,14 @@
               <slot name="auth"></slot>
             </b-row>
 
-            <b-button type="submit" class="mt-3" variant="primary" block>
+            <b-button type="submit" class="mt-3 fs-3" variant="primary" block>
               {{ btn }}
             </b-button>
           </b-form>
           <p class="text-center mt-2">
-            <span>{{ first }}</span>
+            <span class="fs-4">{{ first }}</span>
             <b-link :to="localePath(url)">
-              <span>&nbsp; {{ second }}</span>
+              <span class="fs-4">&nbsp; {{ second }}</span>
             </b-link>
           </p>
         </b-col>

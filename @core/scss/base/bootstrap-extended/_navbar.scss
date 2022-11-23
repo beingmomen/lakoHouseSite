@@ -12,7 +12,7 @@
   @if (lightness($color) > 50) {
     @return $white; // Lighter backgorund, return dark color
   } @else {
-    @return $black; // Darker background, return light color
+    @return $black; // Darker background, return light color 
   }
 }
 
@@ -264,7 +264,7 @@
         &.dropdown-user {
           line-height: 1 !important; // Set due to custom 2 line component in navbar
           .dropdown-menu {
-            width: 12rem;
+            width: 17rem;
             margin-top: 10px;
             i,
             svg {

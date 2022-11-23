@@ -53,18 +53,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.overlay-section {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.2987570028011205) 0%,
-    rgba(0, 0, 0, 0.5088410364145659) 47%,
-    rgba(0, 0, 0, 0.5368522408963585) 100%
-  );
-}
+// .overlay-section {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: rgb(0, 0, 0);
+//   background: linear-gradient(
+//     0deg,
+//     rgba(0, 0, 0, 0.2987570028011205) 0%,
+//     rgba(0, 0, 0, 0.5088410364145659) 47%,
+//     rgba(0, 0, 0, 0.5368522408963585) 100%
+//   );
+// }
 </style>

@@ -118,7 +118,7 @@
                   <b-button
                     type="submit"
                     variant="primary"
-                    class="px-3"
+                    class="px-3 fs-4"
                     @click.prevent="sendMsg"
                   >
                     {{ $t("buttons.send") }}

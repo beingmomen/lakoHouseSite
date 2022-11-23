@@ -41,14 +41,24 @@
   width: calc(100% - 50px);
 }
 
-.custom-form {
+.custom-form { 
   .form-group {
     height: 60px;
     > label,
-    .col-form-label {
+    .col-form-label { 
       height: 25px;
       padding: 0;
-      margin-bottom: 2px;
+      margin-bottom: 8px;
+      font-size: 22px !important
+    }
+
+    .input-group {
+      .form-control {
+        font-size: 18px;
+        &::placeholder {
+          font-size: 18px;
+        }
+      }
     }
   }
 }

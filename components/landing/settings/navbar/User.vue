@@ -8,10 +8,10 @@
       <template #button-content>
         <div class="d-sm-flex d-none user-nav">
           <p class="user-name font-weight-bolder ms-3 mb-0">
-            <span v-if="$auth.user">{{ $auth.user.name }}</span>
+            <span v-if="$auth.user" class="fs-4">{{ $auth.user.name }}</span>
             <!-- <span v-else>Lako House</span> -->
           </p>
-          <span v-if="$auth.user" class="user-status ms-3">
+          <span v-if="$auth.user" class="user-status ms-3 fs-5">
             {{ $auth.user.role }}
           </span>
         </div>
@@ -19,7 +19,7 @@
         <!-- :src="url" -->
         <b-avatar
           v-if="$auth.loggedIn"
-          size="40"
+          size="60"
           :src="url"
           variant="light-primary"
           badge
@@ -46,8 +46,8 @@
         :to="localePath('/profile')"
         link-class="d-flex align-items-center"
       >
-        <user-icon size="1.5x" class="ms-2"></user-icon>
-        <span>{{ $t("navbar.profile") }}</span>
+        <user-icon size="1.5x" class="ms-2 icon-style"></user-icon>
+        <span class="fs-4">{{ $t("navbar.profile") }}</span>
       </b-dropdown-item>
 
       <b-dropdown-divider v-if="$auth.loggedIn" />
@@ -62,16 +62,16 @@
         v-if="dashboardMode"
         @click="toggleMode('dark')"
       >
-        <moon-icon size="1.5x" class="ms-2"></moon-icon>
-        <span>{{ $t("navbar.dark") }}</span>
+        <moon-icon size="1.5x" class="ms-2 icon-style"></moon-icon>
+        <span class="fs-4">{{ $t("navbar.dark") }}</span>
       </b-dropdown-item>
       <b-dropdown-item
         link-class="d-flex align-items-center"
         v-else
         @click="toggleMode('light')"
       >
-        <sun-icon size="1.5x" class="ms-2"></sun-icon>
-        <span>{{ $t("navbar.light") }}</span>
+        <sun-icon size="1.5x" class="ms-2 icon-style"></sun-icon>
+        <span class="fs-4">{{ $t("navbar.light") }}</span>
       </b-dropdown-item>
 
       <b-dropdown-item
@@ -79,16 +79,20 @@
         link-class="d-flex align-items-center"
         @click="switchLang('ar'), $i18n.setLocale('ar')"
       >
-        <globe-icon size="1.5x" class="ms-2"></globe-icon>
-        <span>{{ dashDir == "ltr" ? "Arabic" : "الإنجليزية" }}</span>
+        <globe-icon size="1.5x" class="ms-2 icon-style"></globe-icon>
+        <span class="fs-4">{{
+          dashDir == "ltr" ? "Arabic" : "الإنجليزية"
+        }}</span>
       </b-dropdown-item>
       <b-dropdown-item
         v-else
         link-class="d-flex align-items-center"
         @click="switchLang('en'), $i18n.setLocale('en')"
       >
-        <globe-icon size="1.5x" class="ms-2"></globe-icon>
-        <span>{{ dashDir == "ltr" ? "Arabic" : "الإنجليزية" }}</span>
+        <globe-icon size="1.5x" class="ms-2 icon-style"></globe-icon>
+        <span class="fs-4">{{
+          dashDir == "ltr" ? "Arabic" : "الإنجليزية"
+        }}</span>
       </b-dropdown-item>
 
       <b-dropdown-item
@@ -96,16 +100,16 @@
         link-class="d-flex align-items-center"
         @click="$auth.logout()"
       >
-        <log-out-icon size="1.5x" class="ms-2"></log-out-icon>
-        <span>{{ $t("navbar.logout") }}</span>
+        <log-out-icon size="1.5x" class="ms-2 icon-style"></log-out-icon>
+        <span class="fs-4">{{ $t("navbar.logout") }}</span>
       </b-dropdown-item>
       <b-dropdown-item
         v-else
         :to="localePath('/login')"
         link-class="d-flex align-items-center"
       >
-        <log-in-icon size="1.5x" class="ms-2"></log-in-icon>
-        <span>{{ $t("navbar.login") }}</span>
+        <log-in-icon size="1.5x" class="ms-2 icon-style"></log-in-icon>
+        <span class="fs-4">{{ $t("navbar.login") }}</span>
       </b-dropdown-item>
     </b-nav-item-dropdown>
   </li>
@@ -203,4 +207,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.icon-style {
+  height: 20px !important;
+  width: 22px !important;
+}
 </style>

@@ -103,10 +103,10 @@
         </FormInputIcon>
 
         <b-col cols="12" class="text-end">
-          <b-button type="reset" variant="outline-secondary">
+          <b-button type="reset" variant="outline-secondary" class="fs-4">
             {{ $t("buttons.reset") }}
           </b-button>
-          <b-button type="submit" variant="primary" class="ms-1">
+          <b-button type="submit" variant="primary" class="ms-1 fs-4">
             {{ $t("buttons.update") }}
           </b-button>
         </b-col>
