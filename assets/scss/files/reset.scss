@@ -41,24 +41,28 @@
   width: calc(100% - 50px);
 }
 
-.custom-form { 
+.custom-form {
   .form-group {
     height: 60px;
     > label,
-    .col-form-label { 
+    .col-form-label {
       height: 25px;
       padding: 0;
-      margin-bottom: 8px;
-      font-size: 22px !important
+      margin-bottom: 10px;
+      font-size: 20px !important;
     }
 
     .input-group {
       .form-control {
-        font-size: 18px;
+        font-size: 17px;
         &::placeholder {
-          font-size: 18px;
+          font-size: 16px;
         }
       }
+    }
+
+    .vs__selected {
+      font-size: 17px;
     }
   }
 }
@@ -301,5 +305,12 @@ input:-internal-autofill-selected {
         height: 100%;
       }
     }
+  }
+}
+
+.card-style {
+  .card-title {
+    font-size: 20px;
+    font-weight: bold;
   }
 }

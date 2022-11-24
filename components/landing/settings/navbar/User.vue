@@ -47,7 +47,7 @@
         link-class="d-flex align-items-center"
       >
         <user-icon size="1.5x" class="ms-2 icon-style"></user-icon>
-        <span class="fs-4">{{ $t("navbar.profile") }}</span>
+        <span class="fs-5">{{ $t("navbar.profile") }}</span>
       </b-dropdown-item>
 
       <b-dropdown-divider v-if="$auth.loggedIn" />
@@ -63,7 +63,7 @@
         @click="toggleMode('dark')"
       >
         <moon-icon size="1.5x" class="ms-2 icon-style"></moon-icon>
-        <span class="fs-4">{{ $t("navbar.dark") }}</span>
+        <span class="fs-5">{{ $t("navbar.dark") }}</span>
       </b-dropdown-item>
       <b-dropdown-item
         link-class="d-flex align-items-center"
@@ -71,7 +71,7 @@
         @click="toggleMode('light')"
       >
         <sun-icon size="1.5x" class="ms-2 icon-style"></sun-icon>
-        <span class="fs-4">{{ $t("navbar.light") }}</span>
+        <span class="fs-5">{{ $t("navbar.light") }}</span>
       </b-dropdown-item>
 
       <b-dropdown-item
@@ -80,7 +80,7 @@
         @click="switchLang('ar'), $i18n.setLocale('ar')"
       >
         <globe-icon size="1.5x" class="ms-2 icon-style"></globe-icon>
-        <span class="fs-4">{{
+        <span class="fs-5">{{
           dashDir == "ltr" ? "Arabic" : "الإنجليزية"
         }}</span>
       </b-dropdown-item>
@@ -90,7 +90,7 @@
         @click="switchLang('en'), $i18n.setLocale('en')"
       >
         <globe-icon size="1.5x" class="ms-2 icon-style"></globe-icon>
-        <span class="fs-4">{{
+        <span class="fs-5">{{
           dashDir == "ltr" ? "Arabic" : "الإنجليزية"
         }}</span>
       </b-dropdown-item>
@@ -101,7 +101,7 @@
         @click="$auth.logout()"
       >
         <log-out-icon size="1.5x" class="ms-2 icon-style"></log-out-icon>
-        <span class="fs-4">{{ $t("navbar.logout") }}</span>
+        <span class="fs-5">{{ $t("navbar.logout") }}</span>
       </b-dropdown-item>
       <b-dropdown-item
         v-else
@@ -109,7 +109,7 @@
         link-class="d-flex align-items-center"
       >
         <log-in-icon size="1.5x" class="ms-2 icon-style"></log-in-icon>
-        <span class="fs-4">{{ $t("navbar.login") }}</span>
+        <span class="fs-5">{{ $t("navbar.login") }}</span>
       </b-dropdown-item>
     </b-nav-item-dropdown>
   </li>

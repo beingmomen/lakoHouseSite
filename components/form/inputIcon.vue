@@ -4,7 +4,10 @@
       <b-input-group class="input-group-merge">
         <b-input-group-prepend is-text style="height: 35px">
           <slot name="icon"></slot>
-          <span v-if="phoneCode" style="margin-inline-start: 10px">
+          <span
+            v-if="phoneCode"
+            style="margin-inline-start: 10px; font-size: 17px"
+          >
             ( {{ getPhoneCode }} )
           </span>
         </b-input-group-prepend>

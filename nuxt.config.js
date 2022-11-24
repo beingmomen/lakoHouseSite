@@ -113,7 +113,9 @@ export default {
     ],
     defaultLocale: "ar",
     detectBrowserLanguage: {
+      useCookie: true,
       cookieKey: "i18n_redirected_lako_house_site",
+      redirectOn: "root",
     },
   },
 

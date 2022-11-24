@@ -27,6 +27,9 @@
 
 <script>
 export default {
+  head() {
+    return this.$nuxtI18nHead();
+  },
   middleware: ["mode", "lang", "authentication"],
   name: "default",
   async asyncData({ $axios, store, $toast }) {

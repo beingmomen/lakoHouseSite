@@ -1,5 +1,5 @@
 <template>
-  <b-card class="text-start" :title="$t(`cards.updatePass`)">
+  <b-card class="text-start card-style" :title="$t(`cards.updatePass`)">
     <b-form class="vh-50" @submit.prevent="$emit('updatePass')">
       <b-row>
         <FormPasswordInput
@@ -39,10 +39,10 @@
         </FormPasswordInput>
 
         <b-col cols="12" class="text-end">
-          <b-button type="reset" variant="outline-secondary" class="fs-4">
+          <b-button type="reset" variant="outline-secondary" class="fs-5">
             {{ $t("buttons.reset") }}
           </b-button>
-          <b-button type="submit" variant="primary" class="ms-1 fs-4">
+          <b-button type="submit" variant="primary" class="ms-1 fs-5">
             {{ $t("buttons.update") }}
           </b-button>
         </b-col>
