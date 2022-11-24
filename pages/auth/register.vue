@@ -106,6 +106,7 @@
         storeKey="phone"
         type="tel"
         :module="module"
+        :phoneCode="true"
         lg="12"
         md="12"
       >

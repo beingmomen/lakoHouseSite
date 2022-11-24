@@ -6,7 +6,7 @@ const reset = () => ({
   city: null,
   street: null,
   phone: null,
-  phoneCode: "(000)",
+  phoneCode: "000",
   password: null,
   passwordConfirm: null,
 });
@@ -22,7 +22,7 @@ export const state = () => ({
     city: null,
     street: null,
     phone: null,
-    phoneCode: "(000)",
+    phoneCode: "000",
     password: null,
     passwordConfirm: null,
   },
@@ -145,7 +145,7 @@ export const mutations = {
     state.data[val.key] = val.value;
   },
   phoneCode(state, val) {
-    state.data.phoneCode = `(${val.value})`;
+    state.data.phoneCode = `${val.value}`;
   },
   password(state, val) {
     state.data[val.key] = val.value;
