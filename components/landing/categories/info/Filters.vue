@@ -11,11 +11,13 @@
         <!-- Filters' Card -->
         <b-card>
           <div class="categories">
-            <h6 class="filter-title mt-0">{{ $t("sidebar.categories") }}</h6>
+            <h6 class="filter-title fs-4 fw-bold mt-0">
+              {{ $t("sidebar.categories") }}
+            </h6>
             <p v-for="cat in getAllCategories" :key="cat._id">
               <b-link
                 :to="localePath(`/categories/${cat.slug}-${cat._id}`)"
-                class="text-secondary ms-3"
+                class="text-secondary fs-5 ms-3"
                 >{{ cat.name }}</b-link
               >
             </p>
@@ -23,7 +25,7 @@
 
           <!-- Price Slider -->
           <div class="price-slider">
-            <h6 class="filter-title">{{ $t("cards.price") }}</h6>
+            <h6 class="filter-title fs-4 fw-bold">{{ $t("cards.price") }}</h6>
             <vue-slider
               v-model="priceRange"
               :min="0"
@@ -33,14 +35,18 @@
               @drag-end="changePriceRange"
             />
 
-            <b-button variant="primary" class="mt-2" @click="resetPriceRange">
+            <b-button
+              variant="primary"
+              class="mt-2 fs-5"
+              @click="resetPriceRange"
+            >
               {{ $t("buttons.reset") }}
             </b-button>
           </div>
 
           <!-- Categories -->
           <div class="product-colors">
-            <h6 class="filter-title">{{ $t("cards.colors") }}</h6>
+            <h6 class="filter-title fs-4 fw-bold">{{ $t("cards.colors") }}</h6>
             <b-form-radio-group
               v-model="color"
               class="
@@ -65,7 +71,7 @@
               </b-form-radio>
             </b-form-radio-group>
 
-            <b-button variant="primary" class="mt-2" @click="resetColor">
+            <b-button variant="primary" class="mt-2 fs-5" @click="resetColor">
               {{ $t("buttons.reset") }}
             </b-button>
           </div>

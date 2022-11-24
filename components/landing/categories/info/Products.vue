@@ -11,7 +11,7 @@
         variant="danger"
         class="position-absolute badge"
       >
-        <span>{{ product.discount }}</span>
+        <span class="fs-6">{{ product.discount }}</span>
         <percent-icon size="1x" class="custom-class"></percent-icon>
       </b-badge>
       <div class="item-img text-center">
@@ -31,19 +31,19 @@
       <!-- Product Details -->
       <b-card-body>
         <div class="item-wrapper">
-          <div v-if="itemView == 'grid-view'">
+          <div class="fs-6" v-if="itemView == 'grid-view'">
             {{ $t("cards.by") }}
             <b-link class="ms-1 fw-bold"> Lako House </b-link>
           </div>
           <div>
             <h6
-              class="item-price text-decoration-line-through text-danger"
+              class="item-price fs-6 text-decoration-line-through text-danger"
               v-if="product.discount"
             >
               {{ product.price }} E£
             </h6>
-            <h6 class="item-price" v-else>{{ product.price }} E£</h6>
-            <h6 class="item-price" v-if="product.discount">
+            <h6 class="item-price fs-5" v-else>{{ product.price }} E£</h6>
+            <h6 class="item-price fs-5" v-if="product.discount">
               {{
                 parseInt(
                   product.price - (product.price * product.discount) / 100
@@ -55,7 +55,7 @@
         </div>
         <h6 class="item-name">
           <b-link
-            class="text-body"
+            class="text-body fs-5"
             :to="
               localePath(
                 `${$route.path}/product/${product.slug}-${product._id}`
@@ -66,7 +66,7 @@
           </b-link>
           <b-card-text class="item-company">
             {{ $t("cards.by") }}
-            <b-link class="ms-1"> Lako House </b-link>
+            <b-link class="ms-1 fs-6"> Lako House </b-link>
           </b-card-text>
         </h6>
         <b-card-text class="item-description">
@@ -79,13 +79,13 @@
         <div class="item-wrapper">
           <div class="item-cost">
             <h4
-              class="item-price text-decoration-line-through text-danger"
+              class="item-price fs-6 text-decoration-line-through text-danger"
               v-if="product.discount"
             >
               {{ product.price }} E£
             </h4>
-            <h4 class="item-price" v-else>{{ product.price }} E£</h4>
-            <h4 class="item-price" v-if="product.discount">
+            <h4 class="item-price fs-5" v-else>{{ product.price }} E£</h4>
+            <h4 class="item-price fs-5" v-if="product.discount">
               {{
                 parseInt(
                   product.price - (product.price * product.discount) / 100

@@ -6,21 +6,6 @@
       <div class="content-wrapper">
         <div class="content-body">
           <section class="app-ecommerce-details text-start">
-            <!-- Alert: No item found -->
-            <b-alert variant="danger" :show="product === undefined">
-              <h4 class="alert-heading">Error fetching product data</h4>
-              <div class="alert-body">
-                No item found with this item slug. Check
-                <b-link
-                  class="alert-link"
-                  :to="{ name: 'apps-e-commerce-shop' }"
-                >
-                  Shop
-                </b-link>
-                for other items.
-              </div>
-            </b-alert>
-
             <!-- Content -->
             <b-card v-if="product" no-body>
               <b-card-body>
@@ -51,10 +36,10 @@
                   <!-- Right: Product Details -->
                   <b-col cols="12" md="7">
                     <!-- Product Name -->
-                    <h4>{{ product.name }}</h4>
+                    <h2>{{ product.name }}</h2>
 
                     <!-- Product Brand -->
-                    <b-card-text class="item-company mb-0">
+                    <b-card-text class="item-company mb-0 fs-6">
                       <span>{{ $t("cards.by") }}</span>
                       <b-link class="company-name ms-2"> Lako House </b-link>
                     </b-card-text>
@@ -64,17 +49,18 @@
                       <h4
                         class="
                           item-price
-                          mr-1
+                          me-1
                           text-danger text-decoration-line-through
+                          fs-5
                         "
                         v-if="product.discount"
                       >
                         {{ product.price }} E£
                       </h4>
-                      <h4 class="item-price mr-1" v-else>
+                      <h4 class="item-price me-1 fs-5" v-else>
                         {{ product.price }} E£
                       </h4>
-                      <h4 class="item-price mr-1" v-if="product.discount">
+                      <h4 class="item-price me-1 fs-5" v-if="product.discount">
                         {{
                           parseInt(
                             product.price -
@@ -170,14 +156,14 @@
                           {{ $t("buttons.viewInCart") }}
                         </span>
                       </b-button>
+                      <!-- @click="
+                          handleCartActionClick(product, product.wishList)
+                        " -->
                       <b-button
                         v-else
                         variant="primary"
                         tag="a"
                         class="btn-cart mr-0 mr-sm-1 mb-1 mb-sm-0"
-                        @click="
-                          handleCartActionClick(product, product.wishList)
-                        "
                       >
                         <shopping-cart-icon
                           size="1x"
@@ -187,11 +173,11 @@
                           {{ $t("buttons.addToCart") }}
                         </span>
                       </b-button>
+                      <!-- @click="toggleProductInWishlist(product)" -->
                       <b-button
                         v-if="$auth.loggedIn"
                         variant="outline-secondary"
                         class="btn-wishlist mr-0 mr-sm-1 mb-1 mb-sm-0"
-                        @click="toggleProductInWishlist(product)"
                       >
                         <heart-icon
                           size="1x"

@@ -115,6 +115,7 @@ export default {
   }
   &:dir(rtl) {
     right: 0px;
+    left: unset;
   }
 }
 </style>

@@ -35,7 +35,7 @@ $main_color: #811431;
 .landing-section {
   margin-bottom: 100px;
   overflow: hidden;
-  .section-head { 
+  .section-head {
     font-size: 28px;
     position: relative;
     text-align: start;
@@ -86,6 +86,7 @@ $main_color: #811431;
   .section-tabs-style {
     .nav-tabs {
       .nav-item {
+        font-size: 18px;
         .nav-link {
           font-weight: bold;
           &::after {
@@ -215,7 +216,7 @@ $main_color: #811431;
 
 .message-online {
   label {
-    font-size: 20px; 
+    font-size: 20px;
   }
 
   .form-control {

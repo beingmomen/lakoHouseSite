@@ -23,10 +23,10 @@
 
         <!-- Name -->
         <b-card-text v-if="$auth.user" class="mt-2 h4 color-inherit text-reset">
-          Abdelmomen
+          {{ $auth.user.name }}
         </b-card-text>
         <b-card-text v-if="$auth.user" class="h5 color-inherit text-reset">
-          Admin
+          {{ $auth.user.role }}
         </b-card-text>
       </div>
       <ul class="navigation navigation-main mt-3">

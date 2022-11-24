@@ -1,10 +1,10 @@
 <template>
   <section class="landing-section">
     <b-card-body class="product-style">
-      <div class="mt-4 mb-2 text-center">
+      <!-- <div class="mt-4 mb-2 text-center">
         <h4>Related Products</h4>
         <b-card-text>People also search for this items</b-card-text>
-      </div>
+      </div> -->
 
       <!-- Swiper -->
       <VueSlickCarousel v-bind="settings">

@@ -9,7 +9,7 @@
               class="d-block d-lg-none custom-class cursor-pointer"
               @click="changeProductsFiltersShow(true)"
             ></menu-icon>
-            <div class="search-results">
+            <div class="search-results fs-5">
               {{ productsOfCategoriesTotalItems }}
               {{ $t("cards.resultsFound") }}
             </div>
