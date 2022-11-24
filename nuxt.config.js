@@ -58,6 +58,7 @@ export default {
   plugins: [
     { src: "~/plugins/auth.js", mode: "client" },
     { src: "~/plugins/settings/lottie-player.js", mode: "client" },
+    "~/plugins/lang.js",
     "~/plugins/settings/fontawesome.js",
     "~/plugins/settings/light-vue.js",
     "~/plugins/settings/vee-validate.js",
