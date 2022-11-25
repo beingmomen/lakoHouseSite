@@ -109,7 +109,7 @@ export default {
     langDir: "locales/",
     // strategy: 'no_prefix',   use it when tou won’t prefix in route
     locales: [
-      { code: "en", iso: "en-US", file: "en", dir: "ltr" },
+      // { code: "en", iso: "en-US", file: "en", dir: "ltr" },
       { code: "ar", iso: "ar-EG", file: "ar", dir: "rtl" },
     ],
     defaultLocale: "ar",

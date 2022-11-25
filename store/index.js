@@ -3,7 +3,7 @@ export const state = () => ({
   sidebar: false,
   mode: true,
   logoWidth: true,
-  dashDir: "ltr",
+  dashDir: "rtl",
   productsFilters: false,
   productStyle: "grid-view",
 });
@@ -44,17 +44,6 @@ export const actions = {
     await this.$axios.$get(`/colors`).then((res) => {
       dispatch("global/getAllColors", res.data.data);
     });
-    // await this.$axios
-    //   .$get("https://api.countrystatecity.in/v1/countries", {
-    //     headers: {
-    //       "X-CSCAPI-KEY":
-    //         "OWU4b3JhZXF2bzJUNnZDbFc0TzFXZEphNVlqdEpLR0Z3dnR1bk9sVg==",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.warn("res", res);
-    //     // dispatch("global/getAllColors", res);
-    //   });
   },
   toggleLayoutCollapsed({ dispatch, commit, state }, payload) {
     if (payload > 1200) {

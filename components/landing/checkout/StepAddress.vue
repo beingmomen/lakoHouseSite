@@ -124,7 +124,7 @@
                 class="ms-1"
                 @click.prevent="sendMsg"
               >
-                Save and Deliver Here
+                {{ $t("buttons.saveAndDeliverHere") }}
               </b-button>
             </b-col>
           </b-row>

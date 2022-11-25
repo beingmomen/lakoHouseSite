@@ -89,7 +89,7 @@
       </div>
     </b-card>
   </div>
-  <div class="checkout-items" v-else>
+  <div class="checkout-items text-start" v-else>
     <b-card
       v-for="product in getAllCheckoutLocal"
       :key="product._id"
@@ -115,19 +115,16 @@
             </b-link>
           </h6>
           <span class="item-company">
-            By
-            <b-link class="company-name">Lako House</b-link>
-          </span>
+            {{ $t("cards.by") }}
+            <b-link class="company-name ms-2">Lako House</b-link></span
+          >
         </div>
-        <span class="">
-          {{
-            parseInt(product.price - (product.price * product.discount) / 100)
-          }}
-          E£
+
+        <span class="text-success mb-1 text-danger">
+          {{ product.store }}
         </span>
-        <span class="text-success mb-1">In Stock</span>
         <div class="item-quantity">
-          <span class="quantity-title">Qty:</span>
+          <span class="quantity-title">{{ $t("cards.qty") }} : </span>
           <b-form-spinbutton
             :value="product.buyNumber"
             size="sm"
@@ -137,11 +134,11 @@
           />
         </div>
         <span class="delivery-date text-muted">
-          Delivery by
+          {{ $t("cards.deliveryBy") }}
           {{ $moment().add(product.shippingDate, "day").format("llll") }}
         </span>
         <span class="text-success">
-          {{ product.discount }} % Discount Available From
+          {{ product.discount }} % {{ $t("cards.discount") }}
           {{ product.price }}
         </span>
       </b-card-body>
@@ -151,7 +148,11 @@
         <div class="item-wrapper">
           <div class="item-cost">
             <h4 class="item-price">
-              {{ product.total }}
+              {{
+                parseInt(
+                  product.price - (product.price * product.discount) / 100
+                )
+              }}
               E£
             </h4>
             <p v-if="product.hasFreeShipping" class="card-text shipping">
@@ -165,7 +166,7 @@
           @click="removeProductFromCartClick(product)"
         >
           <x-icon size="1x" class="custom-class me-2"></x-icon>
-          <span>Remove</span>
+          <span>{{ $t("buttons.remove") }}</span>
         </b-button>
         <b-button
           variant="primary"
@@ -174,7 +175,7 @@
           @click="toggleProductInWishlist(product)"
         >
           <heart-icon size="1x" class="custom-class me-2"></heart-icon>
-          <span class="text-nowrap">Wishlist</span>
+          <span class="text-nowrap">{{ $t("buttons.wishlist") }}</span>
         </b-button>
       </div>
     </b-card>

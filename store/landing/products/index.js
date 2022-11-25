@@ -124,7 +124,7 @@ export const actions = {
         this.$toast.error(
           rootState.dashDir == "ltr"
             ? "You can not add more than 2 product in cart"
-            : "لا يمكنك اضافة اكثر من 2 منتج فى العربة "
+            : " قم بتسجيل الدخول لتتمكن من إضافة منتجات أكثر"
         );
         return;
       }

@@ -61,7 +61,10 @@
             class="checkout-form-wizard steps-transparent"
           >
             <!-- account detail tab -->
-            <tab-content title="Cart" icon="feather icon-shopping-cart">
+            <tab-content
+              :title="$t('cards.cart')"
+              icon="feather icon-shopping-cart"
+            >
               <LandingCheckoutStepCart
                 :module="module"
                 @next-step="formWizardNextStep"
@@ -69,7 +72,7 @@
             </tab-content>
 
             <!-- address -->
-            <tab-content title="Address" icon="feather icon-home">
+            <tab-content :title="$t('cards.address')" icon="feather icon-home">
               <LandingCheckoutStepAddress
                 :module="module"
                 @next-step="formWizardNextStep"

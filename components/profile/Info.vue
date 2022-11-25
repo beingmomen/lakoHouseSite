@@ -18,7 +18,9 @@
           />
           <div class="d-flex flex-column ml-1 mx-75">
             <div class="mb-1 text-start">
-              <h2 class="mb-0 text-capitalize">{{ $auth.user.name }}</h2>
+              <h2 class="mb-0 text-capitalize fw-bold">
+                {{ $auth.user.name }}
+              </h2>
               <span class="card-text fs-5">{{ $auth.user.email }}</span>
               <br />
               <span class="card-text fs-5">{{ $auth.user.country }} </span>
@@ -51,18 +53,14 @@
           <tr>
             <th class="pb-50">
               <user-icon size="1.5x" class="custom-class mx-75"></user-icon>
-              <span class="font-weight-bold fs-5">{{
-                $t("cards.username")
-              }}</span>
+              <span class="fw-bold fs-5">{{ $t("cards.username") }}</span>
             </th>
             <td class="pb-50 fs-5">{{ $auth.user.slug }}</td>
           </tr>
           <tr>
             <th class="pb-50">
               <check-icon size="1.5x" class="custom-class mx-75"></check-icon>
-              <span class="font-weight-bold fs-5">{{
-                $t("cards.status")
-              }}</span>
+              <span class="fw-bold fs-5">{{ $t("cards.status") }}</span>
             </th>
             <td class="pb-50 fs-5 text-capitalize">
               {{ $auth.user.active ? "Active" : "Suspend" }}
@@ -71,7 +69,7 @@
           <tr>
             <th class="pb-50 fs-5">
               <star-icon size="1.5x" class="custom-class mx-75"></star-icon>
-              <span class="font-weight-bold fs-5">{{ $t("cards.role") }}</span>
+              <span class="fw-bold fs-5">{{ $t("cards.role") }}</span>
             </th>
             <td class="pb-50 fs-5 text-capitalize">{{ $auth.user.role }}</td>
           </tr>
@@ -82,18 +80,14 @@
                 class="mx-75 fa-xl"
                 style="width: 21px"
               />
-              <span class="font-weight-bold fs-5">{{
-                $t("cards.street")
-              }}</span>
+              <span class="fw-bold fs-5">{{ $t("cards.street") }}</span>
             </th>
             <td class="pb-50 fs-5">{{ $auth.user.street }}</td>
           </tr>
           <tr>
             <th>
               <phone-icon size="1.5x" class="custom-class mx-75"></phone-icon>
-              <span class="font-weight-bold fs-5">{{
-                $t("cards.contact")
-              }}</span>
+              <span class="fw-bold fs-5">{{ $t("cards.contact") }}</span>
             </th>
             <td class="fs-5">
               ( {{ $auth.user.phoneCode }} ) {{ $auth.user.phone }}
