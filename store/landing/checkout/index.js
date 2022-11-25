@@ -156,15 +156,18 @@ export const actions = {
     let products = [];
     if (rootState.auth.loggedIn) {
       let ids = [];
-      state.checkoutData.forEach((x) =>
+      state.checkoutData.forEach((x) => {
+        console.warn("x", x);
         products.push({
-          item: x._id,
-          quantity: x.buyNumber,
-          orderPrice: x.price,
-          orderDiscount: x.discount,
-          orderPriceDiscount: parseInt(x.price - (x.price * x.discount) / 100),
-        })
-      );
+          item: x.product._id,
+          quantity: x.productNumber,
+          orderPrice: x.product.price,
+          orderDiscount: x.product.discount,
+          orderPriceDiscount: parseInt(
+            x.product.price - (x.product.price * x.product.discount) / 100
+          ),
+        });
+      });
       state.checkoutData.forEach((x) => ids.push(x._id));
 
       data = {
@@ -173,6 +176,8 @@ export const actions = {
         total: state.totalPrice,
         subTotal: state.subTotalPrice,
       };
+
+      console.warn("data login", data);
 
       this.$axios
         .$post(`orders`, data)
@@ -229,11 +234,13 @@ export const actions = {
     let ids = [];
     state.checkoutData.forEach((x) =>
       products.push({
-        item: x._id,
-        quantity: x.buyNumber,
-        orderPrice: x.price,
-        orderPriceDiscount: x.discount,
-        orderPriceDiscount: parseInt(x.price - (x.price * x.discount) / 100),
+        item: x.product._id,
+        quantity: x.productNumber,
+        orderPrice: x.product.price,
+        orderDiscount: x.product.discount,
+        orderPriceDiscount: parseInt(
+          x.product.price - (x.product.price * x.product.discount) / 100
+        ),
       })
     );
     state.checkoutData.forEach((x) => ids.push(x._id));
