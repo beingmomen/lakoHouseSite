@@ -25,10 +25,13 @@
 
           <!-- Price Slider -->
           <div class="price-slider">
-            <h6 class="filter-title fs-4 fw-bold">{{ $t("cards.price") }}</h6>
+            <h6 class="filter-title fs-4 fw-bold mb-3">
+              {{ $t("cards.price") }}
+            </h6>
             <vue-slider
               v-model="priceRange"
               :min="0"
+              :tooltip="'always'"
               :max="getTopProductPrice"
               :direction="dashDir"
               :disabled="!getTopProductPrice"

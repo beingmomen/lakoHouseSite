@@ -73,7 +73,7 @@
           </b-link>
         </li>
 
-        <li
+        <!-- <li
           class="nav-item"
           v-if="dashDir == 'ltr'"
           @click="switchLang('ar'), $i18n.setLocale('ar')"
@@ -92,7 +92,7 @@
             <globe-icon size="1.5x" class="custom-class"></globe-icon>
             <span>{{ dashDir == "ltr" ? "Arabic" : "الإنجليزية" }}</span>
           </b-link>
-        </li>
+        </li> -->
       </ul>
       <div
         v-if="$auth.user"

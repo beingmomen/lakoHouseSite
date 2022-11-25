@@ -18,7 +18,7 @@
       class="lottie-container"
       background="transparent"
       speed=".5"
-      style="width: 500px; height: 500px"
+      style="width: fit-content; height: 500px"
       loop
       autoplay
     ></lottie-player>
@@ -30,7 +30,7 @@ export default {
   head() {
     return this.$nuxtI18nHead();
   },
-  middleware: ["mode", "lang", "authentication"],
+  middleware: ["mode", "authentication"],
   name: "default",
   async asyncData({ $axios, store, $toast }) {
     await $axios.$get(`/categories`).then((res) => {

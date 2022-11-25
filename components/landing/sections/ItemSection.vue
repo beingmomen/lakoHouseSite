@@ -24,14 +24,22 @@
               v-for="(prod, i) in category.products"
               :key="i"
             >
-              <img
-                class="slick-img"
-                :src="`${$config.NODE_URL_images}/products/${prod.imageCover}`"
-                alt=""
-              />
-              <h4 class="text-center text-black fw-bold mt-2">
-                {{ prod.name }}
-              </h4>
+              <b-link
+                :to="`/categories/${category.slug}-${
+                  category._id
+                }/product/${prod.name.split(' ').join('-')}-${prod._id}`"
+                class="w-100 h-100 d-block"
+              >
+                <img
+                  class="slick-img"
+                  :src="`${$config.NODE_URL_images}/products/${prod.imageCover}`"
+                  loading="lazy"
+                  alt=""
+                />
+                <h4 class="text-center text-black fw-bold mt-2">
+                  {{ prod.name }}
+                </h4>
+              </b-link>
             </div>
           </VueSlickCarousel>
         </b-tab>
@@ -111,4 +119,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slick-card {
+  height: 273px;
+  cursor: pointer;
+  // display: flex !important;
+  // flex-direction: column;
+  // justify-content: flex-between;
+}
 </style>

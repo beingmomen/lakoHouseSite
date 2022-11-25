@@ -69,6 +69,12 @@
                         }}
                         E£
                       </h4>
+                      <h4
+                        class="item-discount text-danger me-1 fs-5"
+                        v-if="product.discount"
+                      >
+                        ( % {{ product.discount }} )
+                      </h4>
                     </div>
 
                     <!-- Avability -->
@@ -90,18 +96,6 @@
                     <b-card-text>
                       تسريحة: عرض 127 سم ، عمق 46 سم ، ارتفاع 134 سم
                     </b-card-text>
-
-                    <!-- Product Meta [Free shpping, EMI, etc.] -->
-                    <!-- <ul class="product-features list-unstyled">
-                      <li v-if="product.hasFreeShipping">
-                        <feather-icon icon="ShoppingCartIcon" />
-                        <span>Free Shipping</span>
-                      </li>
-                      <li>
-                        <feather-icon icon="DollarSignIcon" />
-                        <span>EMI options available</span>
-                      </li>
-                    </ul> -->
 
                     <hr />
 

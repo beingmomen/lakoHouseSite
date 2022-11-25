@@ -96,11 +96,25 @@
           </div>
         </div>
         <b-button
+          v-if="$auth.loggedIn"
           variant="light"
           tag="a"
           class="btn-wishlist d-flex justify-content-center align-items-center"
-          :disabled="!$auth.loggedIn"
           @click="toggleProductInWishlist(product, product.wishList)"
+        >
+          <heart-icon
+            size="1.5x"
+            class="custom-class"
+            :class="{ 'text-danger': product.wishList }"
+          ></heart-icon>
+          <span class="ms-2">{{ $t("buttons.wishlist") }}</span>
+        </b-button>
+        <b-button
+          v-else
+          variant="light"
+          tag="a"
+          :to="localePath('/wishlist')"
+          class="btn-wishlist d-flex justify-content-center align-items-center"
         >
           <heart-icon
             size="1.5x"
@@ -156,6 +170,7 @@ export default {
       return this.$store.getters["getProductStyle"];
     },
   },
+
   methods: {
     toggleProductInWishlist(data, action) {
       this.$store.dispatch(`${this.module}/toggleProductInWishlist`, {

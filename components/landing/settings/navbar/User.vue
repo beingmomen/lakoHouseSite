@@ -74,7 +74,7 @@
         <span class="fs-5">{{ $t("navbar.light") }}</span>
       </b-dropdown-item>
 
-      <b-dropdown-item
+      <!-- <b-dropdown-item
         v-if="dashDir == 'ltr'"
         link-class="d-flex align-items-center"
         @click="switchLang('ar'), $i18n.setLocale('ar')"
@@ -93,7 +93,7 @@
         <span class="fs-5">{{
           dashDir == "ltr" ? "Arabic" : "الإنجليزية"
         }}</span>
-      </b-dropdown-item>
+      </b-dropdown-item> -->
 
       <b-dropdown-item
         v-if="$auth.$state.user"

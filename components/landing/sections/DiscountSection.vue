@@ -12,20 +12,25 @@
         v-for="(offer, i) in getData"
         :key="i"
       >
-        <b-badge
-          v-if="offer.discount"
-          variant="danger"
-          class="position-absolute badge"
+        <b-link
+          :to="`/categories/${offer.category.slug}-${offer.category._id}/product/${offer.slug}-${offer._id}`"
+          class="w-100 h-100 d-block"
         >
-          <span>{{ offer.discount }}</span>
-          <percent-icon size="1x" class="custom-class"></percent-icon>
-        </b-badge>
-        <img
-          class="slick-img w-100"
-          :src="`${$config.NODE_URL_images}/products/${offer.imageCover}`"
-          alt=""
-        />
-        <h4 class="text-center text-black fw-bold mt-2">{{ offer.name }}</h4>
+          <b-badge
+            v-if="offer.discount"
+            variant="danger"
+            class="position-absolute badge"
+          >
+            <span>{{ offer.discount }}</span>
+            <percent-icon size="1x" class="custom-class"></percent-icon>
+          </b-badge>
+          <img
+            class="slick-img w-100"
+            :src="`${$config.NODE_URL_images}/products/${offer.imageCover}`"
+            alt=""
+          />
+          <h4 class="text-center text-black fw-bold mt-2">{{ offer.name }}</h4>
+        </b-link>
       </div>
     </VueSlickCarousel>
   </section>

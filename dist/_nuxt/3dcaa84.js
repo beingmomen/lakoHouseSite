@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[46],{722:function(t,e,n){"use strict";n.r(e);var c={},r=n(46),component=Object(r.a)(c,(function(){var t=this,e=t.$createElement;return(t._self._c||e)("h2",{staticClass:"brand-text text-primary"},[t._v("Academy")])}),[],!1,null,"06f5b2c0",null);e.default=component.exports}}]);
