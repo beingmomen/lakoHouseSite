@@ -9,71 +9,87 @@
   >
     <div class="shadow-bottom"></div>
     <div
-      class="ps-container main-menu-content scroll-area ps ps--active-y pt-3"
+      class="
+        ps-container
+        main-menu-content
+        scroll-area
+        ps ps--active-y
+        pt-3
+        d-flex
+        flex-column
+        justify-content-between
+      "
     >
-      <div class="text-center">
-        <!-- Avatar -->
-        <b-avatar v-if="$auth.user" size="72px" class="mr-1" :src="url" />
-        <b-avatar
-          v-else
-          size="72px"
-          class="mr-1 badge-minimal-style"
-          :src="require('/assets/images/lako.svg')"
-        />
+      <div class="top">
+        <div class="text-center">
+          <!-- Avatar -->
+          <b-avatar v-if="$auth.user" size="72px" class="mr-1" :src="url" />
+          <b-avatar
+            v-else
+            size="72px"
+            class="mr-1 badge-minimal-style"
+            :src="require('/assets/images/lako.svg')"
+          />
 
-        <!-- Name -->
-        <b-card-text v-if="$auth.user" class="mt-2 h4 color-inherit text-reset">
-          {{ $auth.user.name }}
-        </b-card-text>
-        <b-card-text v-if="$auth.user" class="h5 color-inherit text-reset">
-          {{ $auth.user.role }}
-        </b-card-text>
-      </div>
-      <ul class="navigation navigation-main mt-3">
-        <LandingSettingsSidebarLine :title="$t('sidebar.pages')" />
-        <MainSidebarLink :name="$t(`navbar.home`)" route="/">
-          <template #icon>
-            <home-icon size="1.5x" class="custom-class"></home-icon>
-          </template>
-        </MainSidebarLink>
-        <MainSidebarGroupLink :title="$t('navbar.categories')" :child="getData">
-          <template #icon>
-            <grid-icon size="2x" class="custom-class"></grid-icon>
-          </template>
-        </MainSidebarGroupLink>
-        <MainSidebarLink :name="$t('navbar.wishlist')" route="/wishlist">
-          <template #icon>
-            <heart-icon size="1.5x" class="custom-class"></heart-icon>
-          </template>
-        </MainSidebarLink>
-        <MainSidebarLink :name="$t('navbar.cart')" route="/checkout">
-          <template #icon>
-            <shopping-cart-icon
-              size="1.5x"
-              class="custom-class"
-            ></shopping-cart-icon>
-          </template>
-        </MainSidebarLink>
+          <!-- Name -->
+          <b-card-text
+            v-if="$auth.user"
+            class="mt-2 h4 color-inherit text-reset"
+          >
+            {{ $auth.user.name }}
+          </b-card-text>
+          <b-card-text v-if="$auth.user" class="h5 color-inherit text-reset">
+            {{ $auth.user.role }}
+          </b-card-text>
+        </div>
+        <ul class="navigation navigation-main mt-3">
+          <LandingSettingsSidebarLine :title="$t('sidebar.pages')" />
+          <MainSidebarLink :name="$t(`navbar.home`)" route="/">
+            <template #icon>
+              <home-icon size="1.5x" class="custom-class"></home-icon>
+            </template>
+          </MainSidebarLink>
+          <MainSidebarGroupLink
+            :title="$t('navbar.categories')"
+            :child="getData"
+          >
+            <template #icon>
+              <grid-icon size="2x" class="custom-class"></grid-icon>
+            </template>
+          </MainSidebarGroupLink>
+          <MainSidebarLink :name="$t('navbar.wishlist')" route="/wishlist">
+            <template #icon>
+              <heart-icon size="1.5x" class="custom-class"></heart-icon>
+            </template>
+          </MainSidebarLink>
+          <MainSidebarLink :name="$t('navbar.cart')" route="/checkout">
+            <template #icon>
+              <shopping-cart-icon
+                size="1.5x"
+                class="custom-class"
+              ></shopping-cart-icon>
+            </template>
+          </MainSidebarLink>
 
-        <LandingSettingsSidebarLine :title="$t('sidebar.settings')" />
-        <li class="nav-item" v-if="dashboardMode" @click="toggleMode('dark')">
-          <b-link class="d-flex align-items-center">
-            <moon-icon size="1.5x" class="custom-class"></moon-icon>
-            <span class="menu-title text-truncate">{{
-              $t("navbar.dark")
-            }}</span>
-          </b-link>
-        </li>
-        <li class="nav-item" v-else @click="toggleMode('light')">
-          <b-link class="d-flex align-items-center">
-            <sun-icon size="1.5x" class="custom-class"></sun-icon>
-            <span class="menu-title text-truncate">{{
-              $t("navbar.light")
-            }}</span>
-          </b-link>
-        </li>
+          <LandingSettingsSidebarLine :title="$t('sidebar.settings')" />
+          <li class="nav-item" v-if="dashboardMode" @click="toggleMode('dark')">
+            <b-link class="d-flex align-items-center">
+              <moon-icon size="1.5x" class="custom-class"></moon-icon>
+              <span class="menu-title text-truncate">{{
+                $t("navbar.dark")
+              }}</span>
+            </b-link>
+          </li>
+          <li class="nav-item" v-else @click="toggleMode('light')">
+            <b-link class="d-flex align-items-center">
+              <sun-icon size="1.5x" class="custom-class"></sun-icon>
+              <span class="menu-title text-truncate">{{
+                $t("navbar.light")
+              }}</span>
+            </b-link>
+          </li>
 
-        <!-- <li
+          <!-- <li
           class="nav-item"
           v-if="dashDir == 'ltr'"
           @click="switchLang('ar'), $i18n.setLocale('ar')"
@@ -93,42 +109,43 @@
             <span>{{ dashDir == "ltr" ? "Arabic" : "الإنجليزية" }}</span>
           </b-link>
         </li> -->
-      </ul>
-      <div
-        v-if="$auth.user"
-        class="
-          p-2
-          border-top
-          text-danger
-          cursor-pointer
-          position-absolute
-          w-100
-          bottom-0
-          text-start
-        "
-        @click="$auth.logout()"
-      >
-        <log-out-icon size="1.5x" class="ms-2"></log-out-icon>
-        <span class="ml-1">{{ $t("buttons.logout") }}</span>
+        </ul>
       </div>
-      <div
-        v-else
-        class="
-          p-2
-          border-top
-          text-danger
-          cursor-pointer
-          position-absolute
-          w-100
-          bottom-0
-          text-start
-        "
-        @click="$auth.logout()"
-      >
-        <b-link :to="localePath('/login')" class="text-danger">
-          <log-in-icon size="1.5x" class="ms-2"></log-in-icon>
-          <span class="ml-1">{{ $t("buttons.login") }}</span>
-        </b-link>
+      <div class="auth">
+        <div
+          v-if="$auth.user"
+          class="
+            p-2
+            border-top
+            text-danger
+            cursor-pointer
+            w-100
+            bottom-0
+            text-start
+          "
+          @click="$auth.logout()"
+        >
+          <log-out-icon size="1.5x" class="ms-2"></log-out-icon>
+          <span class="ml-1">{{ $t("buttons.logout") }}</span>
+        </div>
+        <div
+          v-else
+          class="
+            p-2
+            border-top
+            text-danger
+            cursor-pointer
+            w-100
+            bottom-0
+            text-start
+          "
+          @click="$auth.logout()"
+        >
+          <b-link :to="localePath('/login')" class="text-danger">
+            <log-in-icon size="1.5x" class="ms-2"></log-in-icon>
+            <span class="ml-1">{{ $t("buttons.login") }}</span>
+          </b-link>
+        </div>
       </div>
     </div>
   </div>
@@ -257,5 +274,7 @@ export default {
 
 .ps-container {
   height: 100% !important;
+  // overflow: scroll;
+  overflow-y: scroll;
 }
 </style>

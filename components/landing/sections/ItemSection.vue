@@ -20,7 +20,7 @@
             v-bind="settings"
           >
             <div
-              class="slick-card mt-2"
+              class="slick-card card mt-2"
               v-for="(prod, i) in category.products"
               :key="i"
             >
@@ -30,13 +30,15 @@
                 }/product/${prod.name.split(' ').join('-')}-${prod._id}`"
                 class="w-100 h-100 d-block"
               >
-                <img
-                  class="slick-img"
-                  :src="`${$config.NODE_URL_images}/products/${prod.imageCover}`"
-                  loading="lazy"
-                  alt=""
-                />
-                <h4 class="text-center text-black fw-bold mt-2">
+                <div class="img-cont">
+                  <img
+                    class="slick-img card-img h-100"
+                    :src="`${$config.NODE_URL_images}/products/${prod.imageCover}`"
+                    loading="lazy"
+                    alt=""
+                  />
+                </div>
+                <h4 class="text-center text-black fw-bold mt-1">
                   {{ prod.name }}
                 </h4>
               </b-link>
@@ -122,8 +124,9 @@ export default {
 .slick-card {
   height: 273px;
   cursor: pointer;
-  // display: flex !important;
-  // flex-direction: column;
-  // justify-content: flex-between;
+  .img-cont {
+    overflow: hidden;
+    height: 210px;
+  }
 }
 </style>

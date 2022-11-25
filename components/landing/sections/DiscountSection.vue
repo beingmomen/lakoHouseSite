@@ -8,7 +8,7 @@
       v-bind="settings"
     >
       <div
-        class="slick-card mt-2 position-relative"
+        class="slick-card card mt-2 position-relative"
         v-for="(offer, i) in getData"
         :key="i"
       >
@@ -24,11 +24,14 @@
             <span>{{ offer.discount }}</span>
             <percent-icon size="1x" class="custom-class"></percent-icon>
           </b-badge>
-          <img
-            class="slick-img w-100"
-            :src="`${$config.NODE_URL_images}/products/${offer.imageCover}`"
-            alt=""
-          />
+          <div class="img-cont">
+            <img
+              class="slick-img card-img h-100"
+              :src="`${$config.NODE_URL_images}/products/${offer.imageCover}`"
+              loading="lazy"
+              alt=""
+            />
+          </div>
           <h4 class="text-center text-black fw-bold mt-2">{{ offer.name }}</h4>
         </b-link>
       </div>
@@ -112,9 +115,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slick-card {
+  height: 273px;
+  cursor: pointer;
+  .img-cont {
+    overflow: hidden;
+    height: 210px;
+  }
+}
 .badge {
   top: 20px;
   border-radius: 2px;
+  z-index: 1;
   &:dir(ltr) {
     left: 0px;
   }
