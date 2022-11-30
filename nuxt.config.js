@@ -154,7 +154,7 @@ export default {
     baseURL: "https://lakohouseapi.beingmomen.fun/api/v1",
   },
 
-  proxy: { "/api/": "https://179.61.246.119:5678/api/v1" },
+  // proxy: { "/api/": "https://179.61.246.119:5678/api/v1" },
   // proxy: {
   //   "/api/": {
   //     target: "http://127.0.0.1:1234/api/v1/api",
