@@ -32,7 +32,18 @@
               <slot name="auth"></slot>
             </b-row>
 
-            <b-button type="submit" class="mt-3 fs-4" variant="primary" block>
+            <div v-if="forget" class="d-flex justify-content-between">
+              <b-link :to="localePath('/auth/forgot-password')">
+                <small class="fs-5">{{ $t("inputs.forget") }}</small>
+              </b-link>
+            </div>
+            <b-button
+              :disabled="disabled"
+              type="submit"
+              class="mt-3 fs-4"
+              variant="primary"
+              block
+            >
               {{ btn }}
             </b-button>
           </b-form>
@@ -59,10 +70,27 @@ export default {
     second: String,
     url: String,
     btn: String,
+    forget: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      disabled: false,
+    };
   },
   methods: {
     addDataToDB() {
-      this.$store.dispatch(`${this.module}/submit`);
+      this.disabled = true;
+      this.$store
+        .dispatch(`${this.module}/submit`)
+        .then(() => {
+          this.disabled = false;
+        })
+        .catch(() => {
+          this.disabled = false;
+        });
     },
   },
 };

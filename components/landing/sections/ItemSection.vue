@@ -10,13 +10,14 @@
       >
         <b-tab
           v-for="category in getData"
-          :key="category._id"
-          :title="category.name"
+          :key="category._id + 'cat'"
+          :title="dashDir == 'rtl' ? category.arabicName : category.englishName"
           lazy
         >
           <VueSlickCarousel
             v-if="category.products.length"
             class=""
+            :rtl="dashDir == 'rtl' ? true : false"
             v-bind="settings"
           >
             <div
@@ -25,9 +26,11 @@
               :key="i"
             >
               <b-link
-                :to="`/categories/${category.slug}-${
-                  category._id
-                }/product/${prod.name.split(' ').join('-')}-${prod._id}`"
+                :to="
+                  localePath(
+                    `/categories/${category.slug}-${category._id}/product/${prod.slug}-${prod._id}`
+                  )
+                "
                 class="w-100 h-100 d-block"
               >
                 <div class="img-cont">
@@ -39,7 +42,7 @@
                   />
                 </div>
                 <h4 class="text-center text-black fw-bold mt-1">
-                  {{ prod.name }}
+                  {{ dashDir == "rtl" ? prod.arabicName : prod.englishName }}
                 </h4>
               </b-link>
             </div>

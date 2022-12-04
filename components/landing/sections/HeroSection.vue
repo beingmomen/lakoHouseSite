@@ -1,6 +1,10 @@
 <template>
   <section v-if="images.length" class="landing-section position-relative">
-    <VueSlickCarousel class="vue-slick-carousel-style" v-bind="settings">
+    <VueSlickCarousel
+      class="vue-slick-carousel-style"
+      :rtl="dashDir == 'rtl' ? true : false"
+      v-bind="settings"
+    >
       <img
         v-for="slide in images"
         :key="slide._id"

@@ -38,8 +38,8 @@ export const actions = {
       dispatch("landing/getAllCategories", res.data.dataPopulated);
     });
     // &discount[gte]=50
-    await this.$axios.$get(`/products?sort=-discount`).then((res) => {
-      dispatch("landing/getTopProducts", res.data.data);
+    await this.$axios.$get(`/products?sort=-discount&limit=9`).then((res) => {
+      dispatch("landing/getTopProducts", res.data.data.reverse());
     });
     await this.$axios.$get(`/colors`).then((res) => {
       dispatch("global/getAllColors", res.data.data);

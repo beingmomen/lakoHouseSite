@@ -30,7 +30,7 @@ export default {
   head() {
     return this.$nuxtI18nHead();
   },
-  middleware: ["mode", "authentication"],
+  middleware: ["mode", "lang", "authentication"],
   name: "default",
   async asyncData({ $axios, store, $toast }) {
     await $axios.$get(`/categories`).then((res) => {

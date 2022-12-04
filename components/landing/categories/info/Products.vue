@@ -21,7 +21,7 @@
           "
         >
           <b-img
-            :alt="`${product.name}-${product._id}`"
+            :alt="`${product.arabicName}-${product._id}`"
             fluid
             class="card-img-top"
             :src="`${$config.NODE_URL_images}/products/${product.imageCover}`"
@@ -51,6 +51,7 @@
               }}
               E£
             </h6>
+            <h6 class="item-price fs-5" style="height: 21px" v-else></h6>
           </div>
         </div>
         <h6 class="item-name">
@@ -62,16 +63,22 @@
               )
             "
           >
-            {{ product.name }}
+            {{ dashDir == "rtl" ? product.arabicName : product.englishName }}
           </b-link>
           <b-card-text class="item-company">
             {{ $t("cards.by") }}
             <b-link class="ms-1 fs-6"> Lako House </b-link>
           </b-card-text>
         </h6>
-        <b-card-text class="item-description">
-          {{ product.description }}
-        </b-card-text>
+        <!-- <b-card-text
+          class="item-description"
+          v-html="
+            dashDir == 'rtl'
+              ? product.arabicDescription
+              : product.englishDescription
+          "
+        >
+        </b-card-text> -->
       </b-card-body>
 
       <!-- Product Actions -->

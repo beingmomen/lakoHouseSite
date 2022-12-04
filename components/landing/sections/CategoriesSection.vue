@@ -21,7 +21,9 @@
             />
           </b-link>
         </div>
-        <h3 class="fw-bold text-center">{{ x.name }}</h3>
+        <h3 class="fw-bold text-center">
+          {{ dashDir == "rtl" ? x.arabicName : x.englishName }}
+        </h3>
       </b-col>
     </b-row>
   </section>

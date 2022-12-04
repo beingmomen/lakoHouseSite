@@ -2,6 +2,7 @@ export const state = () => ({
   module: "/categories",
   singleData: {},
   allData: [],
+  related: [],
   totalItems: null,
   topProductPrice: null,
   page: 1,
@@ -16,6 +17,9 @@ export const getters = {
   },
   getAllData(state) {
     return state.allData;
+  },
+  related(state) {
+    return state.related;
   },
   getTotalItems(state) {
     return state.totalItems;
@@ -34,6 +38,10 @@ export const getters = {
 export const actions = {
   async showSingleData({ commit, dispatch }, payload) {
     await commit("singleData", payload);
+  },
+
+  async related({ commit, dispatch }, payload) {
+    await commit("related", payload);
   },
 
   async getAllDataFromApi({ commit, dispatch }, payload) {
@@ -187,6 +195,9 @@ export const mutations = {
   },
   setAllData(state, val) {
     state.allData = val;
+  },
+  related(state, val) {
+    state.related = val;
   },
   setTotalItems(state, val) {
     state.totalItems = val;

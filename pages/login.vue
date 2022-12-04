@@ -7,6 +7,7 @@
     :second="$t('login.new_account')"
     :btn="$t('buttons.login')"
     :module="module"
+    :forget="true"
     url="/auth/register"
   >
     <template #auth>

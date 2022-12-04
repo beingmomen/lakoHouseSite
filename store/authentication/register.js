@@ -62,10 +62,14 @@ export const getters = {
 };
 
 export const actions = {
-  async submit({ state, dispatch }) {
+  async submit({ state, dispatch, rootState }) {
     this.$axios.$post("/users/signup", state.data).then((res) => {
       if (res.status == "success") {
-        this.$toast.success(this.$t("msg.accessLogin"));
+        this.$toast.success(
+          rootState.dashDir == "ltr"
+            ? "successfully registered"
+            : "تم التسجيل بنجاح"
+        );
         this.$router.push("/login");
       }
     });

@@ -18,7 +18,9 @@
               <b-link
                 :to="localePath(`/categories/${cat.slug}-${cat._id}`)"
                 class="text-secondary fs-5 ms-3"
-                >{{ cat.name }}</b-link
+                >{{
+                  dashDir == "rtl" ? cat.arabicName : cat.englishName
+                }}</b-link
               >
             </p>
           </div>

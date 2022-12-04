@@ -33,7 +33,9 @@
                     size="1.5x"
                     class="custom-class me-2"
                   ></circle-icon>
-                  <span class="menu-title">{{ cat.name }}</span>
+                  <span class="menu-title">{{
+                    dashDir == "rtl" ? cat.arabicName : cat.englishName
+                  }}</span>
                 </b-link>
               </li>
               <!-- <LandingSettingsNavbarMenuGroup>

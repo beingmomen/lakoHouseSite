@@ -13,7 +13,7 @@
                   <!-- Left: Product Image Container -->
                   <b-col
                     cols="12"
-                    md="5"
+                    md="6"
                     class="
                       d-flex
                       align-items-center
@@ -21,7 +21,7 @@
                       mb-2 mb-md-0
                     "
                   >
-                    <div
+                    <!-- <div
                       class="d-flex align-items-center justify-content-center"
                     >
                       <b-img
@@ -30,19 +30,28 @@
                         class="product-img"
                         fluid
                       />
-                    </div>
+                    </div> -->
+                    <LandingProductSlider2 />
                   </b-col>
 
                   <!-- Right: Product Details -->
-                  <b-col cols="12" md="7">
+                  <b-col cols="12" md="6">
                     <!-- Product Name -->
-                    <h2>{{ product.name }}</h2>
+                    <h2>
+                      {{
+                        dashDir == "rtl"
+                          ? product.arabicName
+                          : product.englishName
+                      }}
+                    </h2>
 
                     <!-- Product Brand -->
-                    <b-card-text class="item-company mb-0 fs-6">
+                    <b-card-text class="item-company mb-5 fs-6">
                       <span>{{ $t("cards.by") }}</span>
                       <b-link class="company-name ms-2"> Lako House </b-link>
                     </b-card-text>
+
+                    <hr />
 
                     <!-- Price And Ratings -->
                     <div class="ecommerce-details-price d-flex flex-wrap mt-1">
@@ -78,30 +87,18 @@
                     </div>
 
                     <!-- Avability -->
-                    <b-card-text>
+                    <b-card-text class="mb-5">
                       {{ $t("cards.available") }} -
                       <span class="text-success text-capitalize">
                         {{ product.store }}
                       </span>
                     </b-card-text>
 
-                    <!-- Product Description -->
-                    <b-card-text>{{ product.description }}</b-card-text>
-                    <b-card-text>
-                      سرير: عرض 185 سم ، طول 254 سم ، ارتفاع 106 سم
-                    </b-card-text>
-                    <b-card-text>
-                      كمود: عرض 61 سم ، عمق 46 سم ، ارتفاع 47 سم
-                    </b-card-text>
-                    <b-card-text>
-                      تسريحة: عرض 127 سم ، عمق 46 سم ، ارتفاع 134 سم
-                    </b-card-text>
-
                     <hr />
 
                     <!-- Colors -->
-                    <div class="product-color-options">
-                      <h6>{{ $t("cards.colors") }}</h6>
+                    <div class="product-color-options mb-5">
+                      <h6>{{ $t("cards.selectColor") }}</h6>
                       <ul class="list-unstyled mb-0">
                         <li
                           v-for="color in product.colors"
@@ -114,10 +111,10 @@
                             class="color-option"
                             :style="{
                               color: color.color,
-                              // borderColor:
-                              //   selectedColor === color.color
-                              //     ? color.color
-                              //     : '',
+                              borderColor:
+                                selectedColor === color.color
+                                  ? color.color
+                                  : '',
                             }"
                           >
                             <div
@@ -185,6 +182,8 @@
                 </b-row>
               </b-card-body>
 
+              <LandingProductTabs />
+
               <!-- Static Content -->
               <!-- <LandingProductFeatures /> -->
 
@@ -208,16 +207,56 @@ import {
 } from "vue-feather-icons";
 export default {
   name: "product",
-  async asyncData({ $axios, store, params }) {
+  async asyncData({ $axios, store, params, route }) {
     const id = params.slug.split("-").at(-1);
+    let category = null;
     await $axios.$get(`/products/${id}`).then((res) => {
+      category = res.data.data.category._id;
       store.dispatch("landing/products/showSingleData", res.data.data);
+    });
+    await $axios.$get(`/categories/${category}/products`).then((res) => {
+      store.dispatch("landing/products/related", res.data.data);
     });
     return {};
   },
   data() {
     return {
       selectedColor: "",
+      settings: {
+        dots: true,
+        infinite: true,
+        initialSlide: 2,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        swipeToSlide: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      },
     };
   },
   components: {

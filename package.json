@@ -52,7 +52,7 @@
         "postcss-rtl": "1.7.3",
         "prismjs": "1.19.0",
         "request": "^2.79.0",
-        "swiper": "5.4.5",
+        "swiper": "^5.4.5",
         "uuid": "8.3.2",
         "vee-validate": "3",
         "vue": "^2.6.14",

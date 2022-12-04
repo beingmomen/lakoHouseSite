@@ -43,7 +43,7 @@
         global
         lg="12"
         md="12"
-        :change="true"
+        :change="false"
         :notId="true"
         :module="module"
       >
@@ -52,7 +52,7 @@
         </template>
       </FormSelect>
 
-      <FormSelect
+      <!-- <FormSelect
         :label="$t('inputs.state')"
         labelSelect="name"
         storeKey="state"
@@ -99,7 +99,7 @@
             style="width: 21px"
           />
         </template>
-      </FormInputIcon>
+      </FormInputIcon> -->
 
       <FormInputIcon
         :label="$t('inputs.phone')"

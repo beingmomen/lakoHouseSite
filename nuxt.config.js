@@ -109,7 +109,7 @@ export default {
     langDir: "locales/",
     // strategy: 'no_prefix',   use it when tou won’t prefix in route
     locales: [
-      // { code: "en", iso: "en-US", file: "en", dir: "ltr" },
+      { code: "en", iso: "en-US", file: "en", dir: "ltr" },
       { code: "ar", iso: "ar-EG", file: "ar", dir: "rtl" },
     ],
     defaultLocale: "ar",
@@ -150,8 +150,9 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // proxy: true,
-    // baseURL: "http://127.0.0.1:5678/api/v1",
-    baseURL: "https://lakohouseapi.beingmomen.fun/api/v1",
+    baseURL: "http://127.0.0.1:5678/api/v1",
+    // baseURL: "https://lakohouseapi.beingmomen.fun/api/v1",
+    // baseURL: "https://lakohouseapi.onrender.com/api/v1",
   },
 
   // proxy: { "/api/": "https://179.61.246.119:5678/api/v1" },
@@ -192,8 +193,9 @@ export default {
   publicRuntimeConfig: {
     SITE_TITLE: "Lako House",
     i18nKey: "i18n_redirected_lako_house_site",
-    // NODE_URL_images: "http://127.0.0.1:5678/images",
-    NODE_URL_images: "https://lakohouseapi.beingmomen.fun/images",
+    NODE_URL_images: "http://127.0.0.1:5678/images",
+    // NODE_URL_images: "https://lakohouseapi.beingmomen.fun/images",
+    // NODE_URL_images: "https://lakohouseapi.onrender.com/images",
   },
 };
 // http://179.61.246.119:1234/api/v1/players

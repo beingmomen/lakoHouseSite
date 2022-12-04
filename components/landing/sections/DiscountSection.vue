@@ -5,6 +5,7 @@
     <VueSlickCarousel
       v-if="getData.length"
       class="offers-style mt-3"
+      :rtl="dashDir == 'rtl' ? true : false"
       v-bind="settings"
     >
       <div
@@ -13,7 +14,11 @@
         :key="i"
       >
         <b-link
-          :to="`/categories/${offer.category.slug}-${offer.category._id}/product/${offer.slug}-${offer._id}`"
+          :to="
+            localePath(
+              `/categories/${offer.category.slug}-${offer.category._id}/product/${offer.slug}-${offer._id}`
+            )
+          "
           class="w-100 h-100 d-block"
         >
           <b-badge
@@ -32,7 +37,9 @@
               alt=""
             />
           </div>
-          <h4 class="text-center text-black fw-bold mt-2">{{ offer.name }}</h4>
+          <h4 class="text-center text-black fw-bold mt-2">
+            {{ dashDir == "rtl" ? offer.arabicName : offer.englishName }}
+          </h4>
         </b-link>
       </div>
     </VueSlickCarousel>
