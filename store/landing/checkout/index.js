@@ -64,17 +64,34 @@ export const getters = {
 
 export const actions = {
   async getAllCartsByUserId({ rootState, dispatch }, payload) {
-    let id = rootState.auth.user._id;
+    let id = await rootState.auth.user._id;
     await this.$axios.$get(`/users/${id}/carts`).then((res) => {
-      dispatch("getAllProductsInCheckout", res);
+      dispatch("getAllProductsInCheckout", res.data.data);
     });
   },
 
-  async getAllProductsInCheckout({ commit, state, rootState }, payload) {
-    if (!rootState.auth.loggedIn) return;
-    await commit("checkoutData", payload.data.data);
-    await commit("setTotalItems", payload.total);
+  async getManyProductsByIds({ dispatch }, payload) {
+    let ids = [];
+    await payload.forEach((x) => ids.push(x.id));
+    await this.$axios.$post(`/products/getMany`, { ids }).then((res) => {
+      dispatch("calcProductNumberInLocalDB", res.data.data);
+      // dispatch("getAllProductsInCheckoutLocal", res.data.data);
+    });
+  },
 
+  async getAllProductsInCheckout({ commit, dispatch, rootState }, payload) {
+    if (!rootState.auth.loggedIn) return;
+    await commit("checkoutData", payload);
+    await dispatch("calcAllProductsPrice");
+    // await commit("setTotalItems", payload.total);
+  },
+
+  async pushToCheckoutData({ commit, dispatch }, payload) {
+    await commit("pushCheckoutData", payload);
+    await dispatch("calcAllProductsPrice");
+  },
+
+  async calcAllProductsPrice({ state, commit }, payload) {
     let checkoutData = await JSON.parse(JSON.stringify(state.checkoutData));
 
     if (!checkoutData.length) return;
@@ -104,15 +121,28 @@ export const actions = {
     await commit("checkoutData", checkoutData || []);
   },
 
+  async calcProductNumberInLocalDB({ dispatch }, payload) {
+    let cookieData = this.$cookies.get("lakoHouseCart");
+
+    await payload.forEach((x) => {
+      cookieData.forEach((y) => {
+        if (x._id == y.id) {
+          x.buyNumber = y.number;
+        }
+      });
+    });
+
+    await dispatch("getAllProductsInCheckoutLocal", payload);
+  },
+
   getAllProductsInCheckoutLocal({ commit, rootState }, payload) {
     if (rootState.auth.loggedIn) return;
-    let cookieData = this.$auth.$storage.getCookie("lakoHouseCart") || [];
 
-    if (cookieData.length) {
+    if (payload.length) {
       let subTotalPrice = [];
       let totalPrice = [];
 
-      cookieData.forEach((x) => {
+      payload.forEach((x) => {
         let number = x.buyNumber;
         let price = parseInt(x.price - (x.price * x.discount) / 100);
         let subTotal = number * x.price;
@@ -131,24 +161,42 @@ export const actions = {
       commit("totalPrice", sumTotalPrice);
     }
 
-    commit("checkoutDataLocal", cookieData || []);
+    commit("checkoutDataLocal", payload || []);
   },
 
   async changeProductNumber({ commit, state, dispatch, rootState }, payload) {
     if (rootState.auth.loggedIn) {
-      await this.$axios.$patch(`/carts/${payload.product._id}`, {
-        productNumber: payload.value,
-      });
-      await dispatch("getAllCartsByUserId");
+      dispatch("changeProductNumberInServerDB", payload);
     } else {
-      let cookieData = this.$auth.$storage.getCookie("lakoHouseCart");
-      let find = cookieData.find((x) => x._id == payload.product._id);
-
-      find.buyNumber = payload.value;
-
-      this.$auth.$storage.setCookie("lakoHouseCart", cookieData, true);
-      dispatch("getAllProductsInCheckoutLocal");
+      dispatch("changeProductNumberInLocalDB", payload);
     }
+  },
+
+  async changeProductNumberInServerDB({ state, dispatch }, payload) {
+    let allData = JSON.parse(JSON.stringify(state.checkoutData));
+    await allData.forEach((x) => {
+      if (x._id == payload.product._id) {
+        x.productNumber = payload.value;
+      }
+    });
+    await dispatch("getAllProductsInCheckout", allData);
+    await this.$axios.$patch(`/carts/${payload.product._id}`, {
+      productNumber: payload.value,
+    });
+  },
+
+  async changeProductNumberInLocalDB({ state, dispatch }, payload) {
+    // Change In DB
+    let cookieData = this.$cookies.get("lakoHouseCart");
+    let find = cookieData.find((x) => x.id == payload.product._id);
+    find.number = payload.value;
+    this.$cookies.set("lakoHouseCart", cookieData);
+
+    // Current Change In Store
+    let allData = JSON.parse(JSON.stringify(state.checkoutDataLocal));
+    let findInStore = allData.find((x) => x._id == payload.product._id);
+    findInStore.buyNumber = payload.value;
+    dispatch("getAllProductsInCheckoutLocal", allData);
   },
 
   saveOrderInDB({ state, commit, rootState }, payload) {
@@ -216,7 +264,7 @@ export const actions = {
             ? "The order has been saved and sent"
             : "تم حفظ وارسال الطلب"
         );
-        this.$auth.$storage.removeCookie("lakoHouseCart", true);
+        this.$cookies.remove("lakoHouseCart");
         commit("checkoutDataLocal", []);
         this.$router.push(this.localePath("/"));
       });
@@ -280,12 +328,15 @@ export const actions = {
       await this.$axios.$delete(`/carts/${payload._id}`);
       await dispatch("getAllCartsByUserId");
     } else {
-      let cookieData = this.$auth.$storage.getCookie("lakoHouseCart");
-      let filter = cookieData.filter((x) => x._id !== payload._id);
-      this.$auth.$storage.setCookie("lakoHouseCart", filter, true);
-
-      dispatch("getAllProductsInCheckoutLocal");
+      dispatch("removeCheckoutFromLocalDB", payload);
     }
+  },
+
+  async removeCheckoutFromLocalDB({ dispatch }, payload) {
+    let cookieData = this.$cookies.get("lakoHouseCart");
+    let filter = cookieData.filter((x) => x.id !== payload._id);
+    this.$cookies.set("lakoHouseCart", filter);
+    await dispatch("getManyProductsByIds", filter);
   },
 
   async countryChange({ dispatch, commit, state }, payload) {
@@ -338,14 +389,17 @@ export const mutations = {
   setAllData(state, val) {
     state.allData = val;
   },
-  setTotalItems(state, val) {
-    state.totalItems = val;
-  },
+  // setTotalItems(state, val) {
+  //   state.totalItems = val;
+  // },
   checkoutDataLocal(state, val) {
     state.checkoutDataLocal = val;
   },
   checkoutData(state, val) {
     state.checkoutData = val;
+  },
+  pushCheckoutData(state, val) {
+    state.checkoutData.push(val);
   },
   subTotalPrice(state, val) {
     state.subTotalPrice = val;

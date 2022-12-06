@@ -38,7 +38,10 @@ export default {
     const slug = params.slug.split("-");
     if (store.$auth.user) {
       await $axios.$get(`/users/${store.$auth.user._id}/carts`).then((res) => {
-        store.dispatch("landing/checkout/getAllProductsInCheckout", res);
+        store.dispatch(
+          "landing/checkout/getAllProductsInCheckout",
+          res.data.data
+        );
       });
     }
     await $axios

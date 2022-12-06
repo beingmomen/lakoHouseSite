@@ -102,13 +102,17 @@ require("/@core/assets/fonts/feather/iconfont.css");
 import { FormWizard, TabContent } from "vue-form-wizard";
 export default {
   name: "checkout",
-  async asyncData({ $axios, store, params }) {
-    store.dispatch("landing/checkout/getAllProductsInCheckoutLocal");
+  async asyncData({ $axios, store, params, app }) {
+    const localData = app.$cookies.get("lakoHouseCart") || [];
+    await store.dispatch("landing/checkout/getManyProductsByIds", localData);
 
     if (store.$auth.user) {
       const id = store.$auth.user._id;
       await $axios.$get(`/users/${id}/carts`).then((res) => {
-        store.dispatch("landing/checkout/getAllProductsInCheckout", res);
+        store.dispatch(
+          "landing/checkout/getAllProductsInCheckout",
+          res.data.data
+        );
       });
     }
     return {};

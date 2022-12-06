@@ -48,7 +48,7 @@ export const actions = {
     await commit("setAllData", payload.data.data);
     await commit("setTotalItems", payload.total);
     await dispatch("activeWishList");
-    await dispatch("activeCheckout");
+    await dispatch("getCheckoutToActive");
   },
 
   getTopProductPrice({ commit }, payload) {
@@ -78,7 +78,7 @@ export const actions = {
         commit("setTotalItems", res.total);
       });
     await dispatch("activeWishList");
-    await dispatch("activeCheckout");
+    await dispatch("getCheckoutToActive");
   },
 
   async toggleProductInWishlist({ commit, dispatch }, payload) {
@@ -118,73 +118,70 @@ export const actions = {
 
   async handleCartActionClick({ state, commit, dispatch, rootState }, payload) {
     if (rootState.auth.loggedIn) {
+      // console.warn("payload", payload);
       let user = rootState.auth.user._id;
       let product = payload._id;
       await this.$axios.$post(`/carts`, { user, product });
-      await dispatch("landing/checkout/getAllCartsByUserId", "", {
+      // await dispatch("landing/checkout/getAllCartsByUserId", "", {
+      //   root: true,
+      // });
+      let data = {
+        user,
+        product: payload,
+        productNumber: 1,
+        subTotal: "0",
+        total: "0",
+      };
+
+      await dispatch("landing/checkout/pushToCheckoutData", data, {
         root: true,
       });
-      await dispatch("activeCheckout");
+      await dispatch("getCheckoutToActive");
     } else {
-      let val = this.$auth.$storage.getCookie("lakoHouseCart") || [];
-
-      if (val.length == "2") {
-        this.$toast.error(
-          rootState.dashDir == "ltr"
-            ? "You can not add more than 2 product in cart"
-            : " قم بتسجيل الدخول لتتمكن من إضافة منتجات أكثر"
-        );
-        return;
-      }
-      val = [...val, payload];
-
-      await this.$auth.$storage.setCookie("lakoHouseCart", val, true);
-      await dispatch("activeCheckout");
+      dispatch("storeProductInLocalDB", payload);
     }
   },
 
-  async activeCheckout({ state, commit, rootState, dispatch }, payload) {
-    // let id = rootState.auth.user._id;
-    let checkout = null;
-    let allData = JSON.parse(JSON.stringify(state.allData));
-    allData.forEach((x) => (x.checkout = false));
+  async storeProductInLocalDB({ dispatch }, payload) {
+    let checkout = [];
+    let val = this.$cookies.get("lakoHouseCart") || [];
+    val = [...val, { id: payload._id, number: 1 }];
+    await this.$cookies.set("lakoHouseCart", val);
 
+    await val.forEach((x) => checkout.push(x.id));
+    await dispatch("activeCheckout", checkout);
+  },
+
+  async getCheckoutToActive({ state, commit, rootState, dispatch }, payload) {
+    let checkout = [];
     if (rootState.auth.loggedIn) {
-      checkout = await rootState.landing.checkout.checkoutData;
-
-      function getInCheckout(array1, array2) {
-        return array1.filter((object1) => {
-          return array2?.some((object2) => {
-            return object1._id === object2.product._id;
-          });
-        });
-      }
-
-      let exist = await getInCheckout(allData, checkout);
-
-      await exist.forEach((x) => (x.checkout = true));
-
-      await allData.map((x) => exist.find((y) => y._id === x._id) || x);
+      await rootState.landing.checkout.checkoutData.forEach((x) =>
+        checkout.push(x.product._id)
+      );
     } else {
-      checkout = this.$auth.$storage.getCookie("lakoHouseCart") || [];
+      checkout = (await this.$cookies.get("lakoHouseCart")) || [];
+    }
+    await dispatch("activeCheckout", checkout);
+  },
 
-      function getInCheckout(array1, array2) {
-        return array1.filter((object1) => {
-          return array2?.some((object2) => {
-            return object1._id === object2._id;
-          });
+  async activeCheckout({ state, commit, rootState }, payload) {
+    let allData = JSON.parse(JSON.stringify(state.allData));
+
+    function getInCheckout(array1, array2) {
+      return array1.filter((object1) => {
+        return array2?.some((object2) => {
+          return object1._id === object2;
         });
-      }
-
-      if (!checkout.length) return;
-
-      let exist = getInCheckout(allData, checkout);
-
-      exist.forEach((x) => (x.checkout = true));
-
-      allData.map((x) => exist.find((y) => y._id === x._id) || x);
+      });
     }
 
+    if (!payload.length) return;
+
+    let exist = await getInCheckout(allData, payload);
+
+    await exist.forEach((x) => (x.checkout = true));
+
+    await allData.map((x) => exist.find((y) => y._id === x._id) || x);
     await commit("setAllData", allData);
   },
 };

@@ -65,6 +65,13 @@
               }}
               E£
             </h4>
+            <h5
+              v-if="item.product.discount"
+              class="item-price text-danger text-decoration-line-through"
+            >
+              {{ item.product.price }}
+              E£
+            </h5>
             <p v-if="item.product.hasFreeShipping" class="card-text shipping">
               <b-badge pill variant="light-success"> Free Shipping </b-badge>
             </p>
@@ -155,6 +162,13 @@
               }}
               E£
             </h4>
+            <h5
+              v-if="product.discount"
+              class="item-price text-danger text-decoration-line-through"
+            >
+              {{ product.price }}
+              E£
+            </h5>
             <p v-if="product.hasFreeShipping" class="card-text shipping">
               <b-badge pill variant="light-success"> Free Shipping </b-badge>
             </p>
