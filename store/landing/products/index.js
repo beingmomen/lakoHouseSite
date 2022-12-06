@@ -118,13 +118,8 @@ export const actions = {
 
   async handleCartActionClick({ state, commit, dispatch, rootState }, payload) {
     if (rootState.auth.loggedIn) {
-      // console.warn("payload", payload);
       let user = rootState.auth.user._id;
       let product = payload._id;
-      await this.$axios.$post(`/carts`, { user, product });
-      // await dispatch("landing/checkout/getAllCartsByUserId", "", {
-      //   root: true,
-      // });
       let data = {
         user,
         product: payload,
@@ -137,6 +132,7 @@ export const actions = {
         root: true,
       });
       await dispatch("getCheckoutToActive");
+      await this.$axios.$post(`/carts`, { user, product });
     } else {
       dispatch("storeProductInLocalDB", payload);
     }
