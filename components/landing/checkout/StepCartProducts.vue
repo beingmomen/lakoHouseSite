@@ -26,8 +26,8 @@
           </h6>
           <span class="item-company">
             {{ $t("cards.by") }}
-            <b-link class="company-name ms-2">Lako House</b-link></span
-          >
+            <b-link class="company-name ms-2">Lako House</b-link>
+          </span>
         </div>
         <span class="text-success mb-1 text-danger">
           {{ item.product.store }}
@@ -42,13 +42,26 @@
             @change="changeProductNumber($event, item)"
           />
         </div>
+
+        <span class="item-company mt-2">
+          {{ $t("cards.colorProduct") }} :
+          <span
+            class="ms-3"
+            style="width: 20px; height: 20px; border-radius: 4px"
+            :style="{ 'background-color': item.color }"
+          ></span>
+        </span>
+        <span class="item-company mt-2">
+          {{ $t("cards.dimension") }} :
+          <span class="ms-3">{{ item.dimension }}</span>
+        </span>
         <span class="delivery-date text-muted">
           {{ $t("cards.deliveryBy") }}
           {{ $moment().add(item.product.shippingDate, "day").format("llll") }}
         </span>
         <span class="text-success">
           {{ item.product.discount }} % {{ $t("cards.discount") }}
-          {{ item.product.price }}
+          {{ item.dimensionPrice }}
         </span>
       </b-card-body>
 
@@ -59,8 +72,8 @@
             <h4 class="item-price">
               {{
                 parseInt(
-                  item.product.price -
-                    (item.product.price * item.product.discount) / 100
+                  item.dimensionPrice -
+                    (item.dimensionPrice * item.product.discount) / 100
                 )
               }}
               E£
@@ -69,7 +82,7 @@
               v-if="item.product.discount"
               class="item-price text-danger text-decoration-line-through"
             >
-              {{ item.product.price }}
+              {{ item.dimensionPrice }}
               E£
             </h5>
             <p v-if="item.product.hasFreeShipping" class="card-text shipping">
@@ -140,13 +153,38 @@
             @change="changeProductNumber($event, product)"
           />
         </div>
+        <div class="item-quantity mt-2">
+          <span class="quantity-title">{{ $t("cards.colorProduct") }} : </span>
+          <!-- <div
+            style="height: 20px; width: 20px"
+            :style="{ 'background-color': product.chooseColor }"
+            class="rounded-2"
+          ></div> -->
+          <b-avatar
+            :style="{
+              backgroundColor: product.chooseColor,
+              color: product.chooseColor,
+            }"
+            :src="`${$config.NODE_URL_images}/woodColors/${product.chooseColor}`"
+          ></b-avatar>
+          <!-- <b-avatar-group size="32px">
+            <b-avatar
+              :style="{
+                backgroundColor: product.chooseColor,
+                color: product.chooseColor,
+              }"
+              :src="`${$config.NODE_URL_images}/woodColors/${product.chooseColor}`"
+              class="pull-up w-100"
+            />
+          </b-avatar-group> -->
+        </div>
         <span class="delivery-date text-muted">
           {{ $t("cards.deliveryBy") }}
           {{ $moment().add(product.shippingDate, "day").format("llll") }}
         </span>
         <span class="text-success">
           {{ product.discount }} % {{ $t("cards.discount") }}
-          {{ product.price }}
+          {{ product.chooseDimension.price }}
         </span>
       </b-card-body>
 
@@ -157,7 +195,8 @@
             <h4 class="item-price">
               {{
                 parseInt(
-                  product.price - (product.price * product.discount) / 100
+                  product.chooseDimension.price -
+                    (product.chooseDimension.price * product.discount) / 100
                 )
               }}
               E£
@@ -166,7 +205,7 @@
               v-if="product.discount"
               class="item-price text-danger text-decoration-line-through"
             >
-              {{ product.price }}
+              {{ product.chooseDimension.price }}
               E£
             </h5>
             <p v-if="product.hasFreeShipping" class="card-text shipping">
@@ -222,7 +261,7 @@ export default {
     },
     async toggleProductInWishlist(data) {
       await this.$store.dispatch(`landing/products/toggleProductInWishlist`, {
-        id: data.product._id,
+        data: data.product,
         action: false,
       });
       await this.removeProductFromCartClick(data);

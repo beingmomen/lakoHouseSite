@@ -53,6 +53,25 @@
             </FormSelect>
 
             <FormSelect
+              :label="$t('inputs.city')"
+              labelSelect="name"
+              storeKey="city"
+              listKey="shippingPriceList"
+              global
+              :notId="true"
+              :placeHolder="$t('inputs.select')"
+              :module="module"
+            >
+              <template #icon>
+                <font-awesome-icon
+                  icon="fa-solid fa-city"
+                  class="fa-lg"
+                  style="width: 21px"
+                />
+              </template>
+            </FormSelect>
+
+            <!-- <FormSelect
               :label="$t('inputs.state')"
               labelSelect="name"
               storeKey="state"
@@ -85,7 +104,7 @@
                   style="width: 21px"
                 />
               </template>
-            </FormSelect>
+            </FormSelect> -->
 
             <FormInputIcon
               :label="$t('inputs.street')"

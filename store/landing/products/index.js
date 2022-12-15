@@ -36,7 +36,13 @@ export const getters = {
 };
 
 export const actions = {
-  async showSingleData({ commit, dispatch }, payload) {
+  async showSingleData({ commit, rootState }, payload) {
+    console.warn("payload", payload);
+    let allCheckout = await rootState.landing.checkout.checkoutDataLocal;
+    let find = await allCheckout.find((x) => x._id == payload._id);
+    if (find) {
+      payload.checkout = true;
+    }
     await commit("singleData", payload);
   },
 
@@ -81,15 +87,36 @@ export const actions = {
     await dispatch("getCheckoutToActive");
   },
 
-  async toggleProductInWishlist({ commit, dispatch }, payload) {
-    let data = { wishList: payload.id };
+  async toggleProductInWishlist({ commit, dispatch, rootState }, payload) {
+    const user = await rootState.auth.user;
+    let userData = await JSON.parse(JSON.stringify(user));
+    let data = { wishList: payload.data._id };
+
     if (!payload.action) {
-      await this.$axios.$patch(`/users/updateWishList`, data);
+      await userData.wishList.push(payload.data);
+      await dispatch("toggleProductInUserWishlist", {
+        id: data,
+        data: userData,
+        url: "/users/updateWishList",
+      });
     } else {
-      await this.$axios.$patch(`/users/removeFromWishList`, data);
+      let filter = await userData.wishList.filter(
+        (x) => x._id != payload.data._id
+      );
+      userData.wishList = await filter;
+      await dispatch("toggleProductInUserWishlist", {
+        id: data,
+        data: userData,
+        url: "/users/removeFromWishList",
+      });
     }
-    await this.$auth.fetchUser();
+  },
+
+  async toggleProductInUserWishlist({ dispatch }, { id, data, url }) {
+    await this.$auth.setUser(data);
     await dispatch("activeWishList");
+    await this.$axios.$patch(url, id);
+    // await this.$auth.fetchUser();
   },
 
   async activeWishList({ state, commit, dispatch, rootState }, payload) {
@@ -117,31 +144,55 @@ export const actions = {
   },
 
   async handleCartActionClick({ state, commit, dispatch, rootState }, payload) {
+    // console.warn("payload with new", payload);
+    // return;
     if (rootState.auth.loggedIn) {
       let user = rootState.auth.user._id;
-      let product = payload._id;
+      let product = payload.data._id;
       let data = {
         user,
-        product: payload,
+        product: payload.data,
         productNumber: 1,
         subTotal: "0",
         total: "0",
+        color: payload.color.color,
+        dimensionId: payload.dimension._id,
+        // arabicDimension: payload.dimension.arabicDimension,
+        // englishDimension: payload.dimension.englishDimension,
+        // dimensionPrice: payload.dimension.price,
       };
-
       await dispatch("landing/checkout/pushToCheckoutData", data, {
         root: true,
       });
       await dispatch("getCheckoutToActive");
-      await this.$axios.$post(`/carts`, { user, product });
+      await this.$axios.$post(`/carts`, {
+        user,
+        product,
+        color: payload.color.color,
+        dimensionId: payload.dimension._id,
+        // dimension: payload.dimension.dimension,
+        // dimensionPrice: payload.dimension.price,
+      });
     } else {
       dispatch("storeProductInLocalDB", payload);
     }
   },
 
   async storeProductInLocalDB({ dispatch }, payload) {
+    // console.warn("payload with new local", payload);
     let checkout = [];
     let val = this.$cookies.get("lakoHouseCart") || [];
-    val = [...val, { id: payload._id, number: 1 }];
+    val = [
+      ...val,
+      {
+        id: payload.data._id,
+        number: 1,
+        dimensionId: payload.dimension._id,
+        color: payload.color
+          ? payload.color.color
+          : payload.data.woodColors.image,
+      },
+    ];
     await this.$cookies.set("lakoHouseCart", val);
 
     await val.forEach((x) => checkout.push(x.id));
@@ -155,7 +206,8 @@ export const actions = {
         checkout.push(x.product._id)
       );
     } else {
-      checkout = (await this.$cookies.get("lakoHouseCart")) || [];
+      let data = (await this.$cookies.get("lakoHouseCart")) || [];
+      await data.forEach((x) => checkout.push(x.id));
     }
     await dispatch("activeCheckout", checkout);
   },

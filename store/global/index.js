@@ -7,6 +7,7 @@ export const state = () => ({
   countriesList: [],
   statesByCountryList: [],
   citiesByStatesList: [],
+  shippingPriceList: [],
   statusList: [
     { id: "pending", ltr: "pending", rtl: "طلب جديد" },
     { id: "on hold", ltr: "on hold", rtl: "فى الإنتظار" },
@@ -1745,6 +1746,9 @@ export const getters = {
   productsList(state) {
     return state.productsList;
   },
+  shippingPriceList(state) {
+    return state.shippingPriceList;
+  },
   countriesList(state) {
     return state.countriesList;
   },
@@ -1772,6 +1776,9 @@ export const actions = {
   getProductsFromApi({ commit }, payload) {
     commit("productsList", payload);
   },
+  shippingPriceList({ commit }, payload) {
+    commit("shippingPriceList", payload);
+  },
   updateCountriesList({ commit }, payload) {
     commit("countriesList", payload);
   },
@@ -1789,6 +1796,9 @@ export const actions = {
 export const mutations = {
   categoriesList(state, val) {
     state.categoriesList = val;
+  },
+  shippingPriceList(state, val) {
+    state.shippingPriceList = val;
   },
   productsList(state, val) {
     state.productsList = val;

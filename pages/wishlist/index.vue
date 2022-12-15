@@ -25,10 +25,11 @@
               </b-badge>
               <div class="item-img text-center">
                 <b-link
-                  :to="{
-                    name: 'apps-e-commerce-product-details',
-                    params: { slug: product.slug },
-                  }"
+                  :to="
+                    localePath(
+                      `/categories/${product.category.slug}-${product.category._id}/product/${product.slug}-${product._id}`
+                    )
+                  "
                 >
                   <b-img
                     :alt="`${product.name}-${product.id}`"
@@ -42,9 +43,9 @@
               <!-- Product Details -->
               <b-card-body>
                 <div class="item-wrapper">
-                  <div>
+                  <div class="fs-6">
                     {{ $t("cards.by") }}
-                    <b-link class="ms-1"> Lako House </b-link>
+                    <b-link class="ms-1 fw-bold"> Lako House </b-link>
                   </div>
                   <div>
                     <h6
@@ -56,8 +57,10 @@
                     >
                       ${{ product.price }}
                     </h6>
-                    <h6 class="item-price" v-else>{{ product.price }} E£</h6>
-                    <h6 class="item-price" v-if="product.discount">
+                    <h6 class="item-price fs-5" v-else>
+                      {{ product.price }} E£
+                    </h6>
+                    <h6 class="item-price fs-5" v-if="product.discount">
                       {{
                         parseInt(
                           product.price -
@@ -66,28 +69,29 @@
                       }}
                       E£
                     </h6>
+                    <h6
+                      class="item-price fs-5"
+                      style="height: 21px"
+                      v-else
+                    ></h6>
                   </div>
                 </div>
                 <h6 class="item-name">
                   <b-link
-                    class="text-body"
-                    :to="{
-                      name: 'apps-e-commerce-product-details',
-                      params: { slug: product.slug },
-                    }"
+                    class="text-body fs-5"
+                    :to="
+                      localePath(
+                        `/categories/${product.category.slug}-${product.category._id}/product/${product.slug}-${product._id}`
+                      )
+                    "
                   >
-                    {{ product.name }}
+                    {{
+                      dashDir == "rtl"
+                        ? product.arabicName
+                        : product.englishName
+                    }}
                   </b-link>
-                  <b-card-text class="item-company">
-                    By
-                    <b-link class="ml-25">
-                      {{ product.brand }}
-                    </b-link>
-                  </b-card-text>
                 </h6>
-                <b-card-text class="item-description">
-                  {{ product.description }}
-                </b-card-text>
               </b-card-body>
 
               <!-- Action Buttons -->
@@ -163,7 +167,7 @@ export default {
   methods: {
     removeProductFromWishlistClick(data) {
       this.$store.dispatch(`${this.module}/toggleProductInWishlist`, {
-        id: data._id,
+        data,
         action: true,
       });
     },

@@ -9,13 +9,30 @@
             v-model="selected"
             plain
             name="some-radios3"
-            :value="dim.dimension"
+            :value="dim"
           >
             <p class="fw-bold">
-              {{ $t("cards.dimension") }}:
-              <span class="fw-normal">
-                {{ dim.dimension }} ➡️
-                <span class="fw-bold"> {{ dim.price }} </span> E£
+              <!-- {{ $t("cards.dimension") }}: -->
+              <span class="fw-normal d-flex">
+                <div v-if="dashDir == 'rtl'" class="ms-3">
+                  <p
+                    v-for="(x, i) in dim.arabicDimension.split('\r\n')"
+                    :key="i"
+                  >
+                    {{ x }}
+                  </p>
+                </div>
+                <div v-else>
+                  <p
+                    v-for="(x, i) in dim.englishDimension.split('\r\n')"
+                    :key="i"
+                  >
+                    {{ x }}
+                  </p>
+                </div>
+                <span class="fw-bold ms-5">
+                  {{ dashDir == "rtl" ? "⬅️ " : "➡️ " }} {{ dim.price }} E£
+                </span>
               </span>
             </p>
           </b-form-radio>
@@ -50,7 +67,7 @@ export default {
   computed: {
     product() {
       const data = this.$store.getters["landing/products/singleData"];
-      this.selected = data.dimensions[0]?.dimension;
+      this.selected = data.dimensions[0];
       return data;
     },
   },
@@ -59,6 +76,7 @@ export default {
   },
   watch: {
     selected(newValue, oldValue) {
+      this.$emit("selectedDimension", newValue);
       // console.warn("newValue", newValue);
     },
   },
@@ -90,7 +108,7 @@ export default {
     padding-inline-start: 60px;
     .form-check {
       .form-check-input {
-        margin-top: 8px;
+        margin-top: 13px;
       }
       .form-check-label {
         font-size: 16px;

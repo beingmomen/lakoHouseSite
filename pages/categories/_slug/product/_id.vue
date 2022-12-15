@@ -64,16 +64,17 @@
                         "
                         v-if="product.discount"
                       >
-                        {{ product.price }} E£
+                        {{ product.dimensions[0].price }} E£
                       </h4>
                       <h4 class="item-price me-1 fs-5" v-else>
-                        {{ product.price }} E£
+                        {{ product.dimensions[0].price }} E£
                       </h4>
                       <h4 class="item-price me-1 fs-5" v-if="product.discount">
                         {{
                           parseInt(
-                            product.price -
-                              (product.price * product.discount) / 100
+                            product.dimensions[0].price -
+                              (product.dimensions[0].price * product.discount) /
+                                100
                           )
                         }}
                         E£
@@ -97,9 +98,18 @@
                     <hr />
 
                     <!-- Colors -->
-                    <div class="product-color-options mb-5">
-                      <h6>{{ $t("cards.selectColor") }}</h6>
-                      <ul class="list-unstyled mb-0">
+                    <div class="product-color-options mb-3">
+                      <h6>
+                        {{
+                          product.colors.length
+                            ? $t("cards.selectColor")
+                            : $t("cards.colorProduct")
+                        }}
+                      </h6>
+                      <ul
+                        v-if="product.colors.length"
+                        class="list-unstyled mb-0"
+                      >
                         <li
                           v-for="color in product.colors"
                           :key="color._id"
@@ -127,6 +137,13 @@
                           </div>
                         </li>
                       </ul>
+
+                      <b-avatar
+                        class="d-inline-block mt-2"
+                        size="50"
+                        v-else
+                        :src="`${$config.NODE_URL_images}/woodColors/${product.woodColors.image}`"
+                      ></b-avatar>
                     </div>
 
                     <hr />
@@ -147,10 +164,10 @@
                           {{ $t("buttons.viewInCart") }}
                         </span>
                       </b-button>
-                      <!-- @click="
-                          handleCartActionClick(product, product.wishList)
-                        " -->
                       <b-button
+                        @click="
+                          handleCartActionClick(product, product.wishList)
+                        "
                         v-else
                         variant="primary"
                         tag="a"
@@ -182,7 +199,9 @@
                 </b-row>
               </b-card-body>
 
-              <LandingProductTabs />
+              <LandingProductTabs
+                @selectedDimension="selectedDimensionAction"
+              />
 
               <!-- Static Content -->
               <!-- <LandingProductFeatures /> -->
@@ -207,8 +226,11 @@ import {
 } from "vue-feather-icons";
 export default {
   name: "product",
-  async asyncData({ $axios, store, params, route }) {
-    const id = params.slug.split("-").at(-1);
+  async asyncData({ $axios, store, params, route, app }) {
+    const localData = app.$cookies.get("lakoHouseCart") || [];
+    await store.dispatch("landing/checkout/getManyProductsByIds", localData);
+
+    const id = params.id.split("-").at(-1);
     let category = null;
     await $axios.$get(`/products/${id}`).then((res) => {
       category = res.data.data.category._id;
@@ -222,6 +244,7 @@ export default {
   data() {
     return {
       selectedColor: "",
+      selectedDimension: "",
       settings: {
         dots: true,
         infinite: true,
@@ -259,15 +282,49 @@ export default {
       },
     };
   },
+
+  methods: {
+    selectedDimensionAction(data) {
+      this.selectedDimension = data;
+    },
+
+    async handleCartActionClick(data, action) {
+      if (action) {
+        // await this.toggleProductInWishlist(data, action);
+      }
+      await this.$store.dispatch(`landing/products/handleCartActionClick`, {
+        data,
+        color: this.selectedColor ? { color: this.selectedColor } : null,
+        dimension: this.selectedDimension,
+      });
+      const localData = (await this.$cookies.get("lakoHouseCart")) || [];
+      await this.$store.dispatch(
+        "landing/checkout/getManyProductsByIds",
+        localData
+      );
+      await this.$store.dispatch(`landing/products/showSingleData`, data);
+    },
+  },
   components: {
     HeartIcon,
     ShoppingCartIcon,
     StarIcon,
     PercentIcon,
   },
+  watch: {
+    selectedColor(newValue, oldValue) {
+      // console.warn("newValue", newValue);
+    },
+    selectedDimension(newValue, oldValue) {
+      // console.warn("selectedDimension", newValue);
+    },
+  },
   computed: {
     product() {
-      return this.$store.getters["landing/products/singleData"];
+      const data = this.$store.getters["landing/products/singleData"];
+      // console.warn("data", data);
+      this.selectedColor = data.colors.length ? data.colors[0].color : null;
+      return data;
     },
   },
 };

@@ -12,9 +12,11 @@ export const state = () => ({
     country: null,
     state: null,
     city: null,
+    cityId: null,
+    shippingPrice: null,
     street: null,
     phone: null,
-    phoneCode: "(000)",
+    phoneCode: "000",
   },
 });
 
@@ -72,11 +74,21 @@ export const actions = {
 
   async getManyProductsByIds({ dispatch }, payload) {
     let ids = [];
+    let find = null;
     await payload.forEach((x) => ids.push(x.id));
-    await this.$axios.$post(`/products/getMany`, { ids }).then((res) => {
-      dispatch("calcProductNumberInLocalDB", res.data.data);
-      // dispatch("getAllProductsInCheckoutLocal", res.data.data);
+    let data = await this.$axios.$post(`/products/getMany`, { ids });
+    await data.data.data.forEach((x) => {
+      payload.forEach((y) => {
+        x.dimensions.forEach((dim) => {
+          if (dim._id == y.dimensionId) {
+            find = x.dimensions.find((z) => z._id == y.dimensionId);
+            x.chooseColor = y.color;
+            x.chooseDimension = find;
+          }
+        });
+      });
     });
+    await dispatch("calcProductNumberInLocalDB", data.data.data);
   },
 
   async getAllProductsInCheckout({ commit, dispatch, rootState }, payload) {
@@ -144,8 +156,10 @@ export const actions = {
 
       payload.forEach((x) => {
         let number = x.buyNumber;
-        let price = parseInt(x.price - (x.price * x.discount) / 100);
-        let subTotal = number * x.price;
+        let price = parseInt(
+          x.chooseDimension.price - (x.chooseDimension.price * x.discount) / 100
+        );
+        let subTotal = number * x.chooseDimension.price;
         let total = number * price;
         x.subTotal = subTotal;
         x.total = total;
@@ -199,7 +213,7 @@ export const actions = {
     dispatch("getAllProductsInCheckoutLocal", allData);
   },
 
-  saveOrderInDB({ state, commit, rootState }, payload) {
+  saveOrderInDB({ state, commit, rootState, dispatch }, payload) {
     let data = {};
     let products = [];
     if (rootState.auth.loggedIn) {
@@ -242,33 +256,44 @@ export const actions = {
           this.$axios.$patch(`carts`, ids);
         });
     } else {
-      state.checkoutDataLocal.forEach((x) =>
-        products.push({
-          item: x._id,
-          quantity: x.buyNumber,
-          orderPrice: x.price,
-          orderPriceDiscount: parseInt(x.price - (x.price * x.discount) / 100),
-        })
-      );
-
-      data = {
-        ...state.data,
-        products,
-        total: state.totalPrice,
-        subTotal: state.subTotalPrice,
-      };
-
-      this.$axios.$post(`orders`, data).then((res) => {
-        this.$toast.success(
-          rootState.dashDir == "ltr"
-            ? "The order has been saved and sent"
-            : "تم حفظ وارسال الطلب"
-        );
-        this.$cookies.remove("lakoHouseCart");
-        commit("checkoutDataLocal", []);
-        this.$router.push(this.localePath("/"));
-      });
+      dispatch("saveOrderInDBFromLocal");
     }
+  },
+
+  saveOrderInDBFromLocal({ state, commit, rootState }, payload) {
+    let data = {};
+    let products = [];
+    state.checkoutDataLocal.forEach((x) =>
+      products.push({
+        item: x._id,
+        quantity: x.buyNumber,
+        orderPrice: x.dimensions[0].price,
+        orderDiscount: x.discount,
+        orderPriceDiscount: parseInt(
+          x.dimensions[0].price - (x.dimensions[0].price * x.discount) / 100
+        ),
+        dimension: x.chooseDimension,
+        color: x.chooseColor,
+      })
+    );
+
+    data = {
+      ...state.data,
+      products,
+      total: state.totalPrice,
+      subTotal: state.subTotalPrice,
+    };
+
+    this.$axios.$post(`orders`, data).then((res) => {
+      this.$toast.success(
+        rootState.dashDir == "ltr"
+          ? "The order has been saved and sent"
+          : "تم حفظ وارسال الطلب"
+      );
+      this.$cookies.remove("lakoHouseCart");
+      commit("checkoutDataLocal", []);
+      this.$router.push(this.localePath("/"));
+    });
   },
 
   saveMainAddressOrderInDB({ state, commit, rootState }, payload) {
@@ -316,20 +341,20 @@ export const actions = {
       });
   },
 
-  async removeProductFromCartClick(
-    { dispatch, state, commit, rootState },
-    payload
-  ) {
+  async removeProductFromCartClick({ dispatch, rootState }, payload) {
     if (rootState.auth.loggedIn) {
-      let allData = JSON.parse(JSON.stringify(state.checkoutData));
-      let filter = allData.filter((x) => x._id != payload._id);
-      commit("checkoutData", filter);
-
-      await this.$axios.$delete(`/carts/${payload._id}`);
-      await dispatch("getAllCartsByUserId");
+      dispatch("removeCheckoutFromServerDB", payload);
     } else {
       dispatch("removeCheckoutFromLocalDB", payload);
     }
+  },
+
+  async removeCheckoutFromServerDB({ dispatch, state, commit }, payload) {
+    let allData = await JSON.parse(JSON.stringify(state.checkoutData));
+    let filter = await allData.filter((x) => x._id != payload._id);
+    await commit("checkoutData", filter);
+    await dispatch("calcAllProductsPrice");
+    await this.$axios.$delete(`/carts/${payload._id}`);
   },
 
   async removeCheckoutFromLocalDB({ dispatch }, payload) {
@@ -435,7 +460,9 @@ export const mutations = {
     state.data[val.key] = val.value;
   },
   city(state, val) {
-    state.data[val.key] = val.value.name;
+    state.data[val.key] = val.value;
+    state.data.cityId = val.value._id;
+    state.data.shippingPrice = val.value.price;
   },
   street(state, val) {
     state.data[val.key] = val.value;

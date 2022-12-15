@@ -14,6 +14,7 @@ import {
   faLocationDot,
   faWarehouse,
   faSignal,
+  faRuler,
 } from "@fortawesome/free-solid-svg-icons";
 // import { faFile } from '@fortawesome/free-regular-svg-icons'
 import { faTwitter, faFacebookF } from "@fortawesome/free-brands-svg-icons";
@@ -33,6 +34,7 @@ library.add(
   faGlobe,
   faLocationDot,
   faWarehouse,
-  faSignal
+  faSignal,
+  faRuler
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);

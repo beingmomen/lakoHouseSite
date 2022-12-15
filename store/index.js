@@ -37,6 +37,9 @@ export const actions = {
     await this.$axios.$get(`/categories`).then((res) => {
       dispatch("landing/getAllCategories", res.data.dataPopulated);
     });
+    await this.$axios.$get(`/shippingPrice`).then((res) => {
+      dispatch("global/shippingPriceList", res.data.dataPopulated);
+    });
     // &discount[gte]=50
     await this.$axios.$get(`/products?sort=-discount&limit=9`).then((res) => {
       dispatch("landing/getTopProducts", res.data.data.reverse());
